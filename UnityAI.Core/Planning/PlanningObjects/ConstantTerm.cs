@@ -3,7 +3,7 @@
 // Developed For:  UnityAI
 // License: Artistic License 2.0
 //
-// Description:   HTNPlanner
+// Description:   Represents a Constant Term in a Partial Order Plan
 //
 // Modification Notes:
 // Date		Author        	Notes
@@ -16,7 +16,18 @@ using System.Text;
 
 namespace UnityAI.Core
 {
-    public class HTNPlanner
+    public class ConstantTerm : Term
     {
+        #region Constructors
+        /// <summary>
+        /// Constuct a Constant Term
+        /// </summary>
+        /// <param name="vsName"></param>
+        public ConstantTerm(string vsName)
+        {
+            Name = vsName;
+            meTermType = EnumTermType.Constant;
+        }
+        #endregion
     }
 }

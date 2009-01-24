@@ -3,7 +3,7 @@
 // Developed For:  UnityAI
 // License: Artistic License 2.0
 //
-// Description:   HTNPlanner
+// Description:   Represents an Effect in a Partial Order Plan
 //
 // Modification Notes:
 // Date		Author        	Notes
@@ -16,7 +16,10 @@ using System.Text;
 
 namespace UnityAI.Core
 {
-    public class HTNPlanner
+    /// <summary>
+    /// Represents the Effect of an Action
+    /// </summary>
+    public class EffectList : List<Predicate>
     {
     }
 }

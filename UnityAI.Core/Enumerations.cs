@@ -1,6 +1,7 @@
 ﻿//-------------------------------------------------------------------
 // (c) Copyright 2009  UnityAI Core Team
 // Developed For:  UnityAI
+// License: Artistic License 2.0
 //
 // Description:   Enumerations
 //
@@ -15,5 +16,14 @@ using System.Text;
 
 namespace UnityAI.Core
 {
-
+    #region Planning Enums
+    /// <summary>
+    /// Term Type
+    /// </summary>
+    public enum EnumTermType : int
+    {
+        Unknown = 0,
+        Constant = 1,
+    }
+    #endregion
 }

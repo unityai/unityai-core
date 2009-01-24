@@ -36,10 +36,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Planning\PlanningObjects\Action.cs" />
+    <Compile Include="Planning\PlanningObjects\CasualLink.cs" />
+    <Compile Include="Planning\PlanningObjects\ConstantTerm.cs" />
+    <Compile Include="Planning\PlanningObjects\EffectList.cs" />
+    <Compile Include="Planning\PlanningObjects\OrderingConstraint.cs" />
+    <Compile Include="Planning\PlanningObjects\PartialOrderPlan.cs" />
+    <Compile Include="Planning\PlanningObjects\PreconditionList.cs" />
+    <Compile Include="Planning\PlanningObjects\Predicate.cs" />
+    <Compile Include="Planning\PlanningObjects\Term.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="LinguisticGeometry\LinguisticTools.cs" />
     <Compile Include="Planning\HTNPlanner.cs" />
+    <Compile Include="PriorityScheduler.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Utilities\Utility.cs" />
   </ItemGroup>

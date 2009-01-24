@@ -3,7 +3,9 @@
 // Developed For:  UnityAI
 // License: Artistic License 2.0
 //
-// Description:   HTNPlanner
+// Description:   Represents the Main Scheduler
+//                This will implement three Queues, High, Medium and Low
+//                So AI actions can be managed based on their Priority
 //
 // Modification Notes:
 // Date		Author        	Notes
@@ -16,7 +18,7 @@ using System.Text;
 
 namespace UnityAI.Core
 {
-    public class HTNPlanner
+    public class PriorityScheduler
     {
     }
 }
