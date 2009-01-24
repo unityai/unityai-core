@@ -1,0 +1,8 @@
+_ReSharper.UnityAI/*
+UnityAI.Core/bin/*
+UnityAI.Core/obj/*
+UnityAI.Core/*.4.1.resharper.user
+UnityAI.Test/bin/*
+UnityAI.Test/obj/*
+UnityAI.4.1.resharper.user
+UnityAI.suo

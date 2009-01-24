@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityAI.Core", "UnityAI.Core\UnityAI.Core.csproj", "{3947B395-AD34-4420-851A-DCE6813C577F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UnityAI.Test", "UnityAI.Test\UnityAI.Test.csproj", "{26AE99EB-EB6A-447F-AA17-A4883E5FA64C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{607CF32F-2E32-4D9D-AB6D-7EC74B81AB99}"
+	ProjectSection(SolutionItems) = preProject
+		artistic_license_2.0.pdf = artistic_license_2.0.pdf
+		LocalTestRun.testrunconfig = LocalTestRun.testrunconfig
+		UnityAI.vsmdi = UnityAI.vsmdi
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(TestCaseManagementSettings) = postSolution
+		CategoryFile = UnityAI.vsmdi
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3947B395-AD34-4420-851A-DCE6813C577F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3947B395-AD34-4420-851A-DCE6813C577F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3947B395-AD34-4420-851A-DCE6813C577F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3947B395-AD34-4420-851A-DCE6813C577F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{26AE99EB-EB6A-447F-AA17-A4883E5FA64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{26AE99EB-EB6A-447F-AA17-A4883E5FA64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{26AE99EB-EB6A-447F-AA17-A4883E5FA64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{26AE99EB-EB6A-447F-AA17-A4883E5FA64C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
