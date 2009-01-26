@@ -64,6 +64,7 @@ namespace UnityAI.Core
         /// <param name="voPredicate">A Predicate to Add</param>
         public void AddPrecondition(Predicate voPredicate)
         {
+            voPredicate.ParentAction = this;
             moPreconditionList.Add(voPredicate);
         }
 
@@ -73,7 +74,42 @@ namespace UnityAI.Core
         /// <param name="voPredicate">A Predicate to Add</param>
         public void AddEffect(Predicate voPredicate)
         {
+            voPredicate.ParentAction = this;
             moEffectList.Add(voPredicate);
+        }
+        #endregion
+
+        #region Static Methods
+        /// <summary>
+        /// The Start Symbol has only Effects
+        /// </summary>
+        /// <param name="voEffects">The Effects of the Start</param>
+        /// <returns>New Start Symbol</returns>
+        public static Action CreateStart(params Predicate[] voEffects)
+        {
+            Action start = new Action(new Predicate("Start"));
+            foreach (Predicate p in voEffects)
+            {
+                start.AddEffect(p);
+            }
+
+            return start;
+        }
+
+        /// <summary>
+        /// Create the finish symbol
+        /// </summary>
+        /// <param name="voPreconditions">The Preconditions of the Finish</param>
+        /// <returns>New Finish Symbol</returns>
+        public static Action CreateFinish(params Predicate[] voPreconditions)
+        {
+            Action finish = new Action(new Predicate("Finish"));
+            foreach (Predicate p in voPreconditions)
+            {
+                finish.AddPrecondition(p);
+            }
+
+            return finish;
         }
         #endregion
     }

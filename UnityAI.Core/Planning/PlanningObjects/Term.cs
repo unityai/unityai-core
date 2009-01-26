@@ -18,7 +18,7 @@ using System.Text;
 namespace UnityAI.Core
 {
     [Serializable]
-    public class Term
+    public class Term : IComparable
     {
         #region Fields
         protected EnumTermType meTermType = EnumTermType.Unknown;
@@ -50,6 +50,39 @@ namespace UnityAI.Core
         /// </summary>
         public Term()
         {
+        }
+        #endregion
+
+        #region IComparable Members
+
+        public int CompareTo(object obj)
+        {
+            if (obj == null)
+                return 1;
+
+            if (obj is Term == false)
+                throw new ArgumentException("Terms can only be compared to other Terms");
+
+            Term t = obj as Term;
+
+            if (TermType == t.TermType)
+            {
+                return Name.CompareTo(t.Name);
+            }
+            else
+            {
+                return TermType.CompareTo(t.TermType);
+            }
+        }
+
+        public static bool operator ==(Term t1, Term t2)
+        {
+            return t1.CompareTo(t2) == 0;
+        }
+
+        public static bool operator !=(Term t1, Term t2)
+        {
+            return !(t1 == t2);
         }
         #endregion
     }

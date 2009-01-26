@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<TestRun id="8e19c9dd-63b1-4a2d-b7ed-e4f41de66dc0" name="smccarthy@CAMERON 2009-01-25 18:06:41" runUser="CAMERON\smccarthy" xmlns="http://microsoft.com/schemas/VisualStudio/TeamTest/2006">
+  <TestRunConfiguration name="Local Test Run" id="c33c086e-1a02-4ada-95da-b9dbc409887c">
+    <Description>This is a default test run configuration for a local test run.</Description>
+    <Deployment runDeploymentRoot="Z:\unityai-core\TestResults\smccarthy_CAMERON 2009-01-25 18_06_41">
+      <DeploymentItem filename="Z:\unityai-core\UnityAI.Core\bin\Debug\UnityAI.Core.dll" />
+    </Deployment>
+    <TestTypeSpecific />
+  </TestRunConfiguration>
+  <ResultSummary outcome="Error">
+    <Counters total="1" executed="1" error="0" failed="0" timeout="0" aborted="1" inconclusive="0" passedButRunAborted="0" notRunnable="0" notExecuted="0" disconnected="0" warning="0" passed="0" completed="0" inProgress="0" pending="0" />
+    <RunInfos>
+      <RunInfo computerName="CAMERON" outcome="Error" timestamp="2009-01-25T18:09:03.3555580-07:00">
+        <Text>Test host process exited unexpectedly.</Text>
+      </RunInfo>
+    </RunInfos>
+  </ResultSummary>
+  <Times creation="2009-01-25T18:06:41.2562545-07:00" queuing="2009-01-25T18:06:44.5197175-07:00" start="2009-01-25T18:06:44.8331740-07:00" finish="2009-01-25T18:09:03.3565345-07:00" />
+  <TestDefinitions>
+    <UnitTest name="PlanOrderTest" storage="z:\unityai-core\unityai.test\bin\debug\unityai.test.dll" id="e97f8ba9-159c-8778-93a6-01d1077e7a06">
+      <Css projectStructure="" iteration="" />
+      <Owners>
+        <Owner name="" />
+      </Owners>
+      <Execution id="eda2af21-99f4-4616-a7fc-e35f3319b4b2" />
+      <TestMethod codeBase="Z:\unityai-core\UnityAI.Test\bin\Debug\UnityAI.Test.dll" adapterTypeName="Microsoft.VisualStudio.TestTools.TestTypes.Unit.UnitTestAdapter, Microsoft.VisualStudio.QualityTools.Tips.UnitTest.Adapter, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" className="UnityAI.Test.PartialOrderPlannerTest, UnityAI.Test" name="PlanOrderTest" />
+    </UnitTest>
+  </TestDefinitions>
+  <TestLists>
+    <TestList name="Results Not in a List" id="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+    <TestList name="All Loaded Results" id="19431567-8539-422a-85d7-44ee4e166bda" />
+  </TestLists>
+  <TestEntries>
+    <TestEntry testId="e97f8ba9-159c-8778-93a6-01d1077e7a06" executionId="fa715e83-eb70-47f1-b105-3361a0f516e4" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d" />
+  </TestEntries>
+  <Results>
+    <UnitTestResult executionId="fa715e83-eb70-47f1-b105-3361a0f516e4" testId="e97f8ba9-159c-8778-93a6-01d1077e7a06" testName="PlanOrderTest" computerName="CAMERON" duration="00:02:18.2206455" startTime="2009-01-25T18:06:45.1358890-07:00" endTime="2009-01-25T18:09:03.3565345-07:00" testType="13cdc9d9-ddb5-4fa4-a97d-d965ccfc6d4b" outcome="Aborted" testListId="8c84fa94-04c1-424b-9868-57a2d4851a1d">
+    </UnitTestResult>
+  </Results>
+</TestRun>
