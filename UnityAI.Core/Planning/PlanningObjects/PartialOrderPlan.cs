@@ -85,7 +85,8 @@ namespace UnityAI.Core.Planning
                 //if the start symbol has this effect we don't add it
                 if (moStartAction.Effects.Exists(delegate(Predicate p)
                             {
-                                return p == pred;
+                                //if they are the same including the negative
+                                return p == pred && p.IsNegative == pred.IsNegative;
                             }) == false
                     )
                 {
