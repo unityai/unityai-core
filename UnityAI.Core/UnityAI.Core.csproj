@@ -36,6 +36,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Fuzzy\FuzzyController.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\ContinuousFuzzyRuleVariable.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\FuzzyClause.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\FuzzyOperator.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\FuzzyRule.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\FuzzyRuleBase.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\FuzzyRuleVariable.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\FuzzySet.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\ShoulderFuzzySet.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\TrapezoidFuzzySet.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\TriangleFuzzySet.cs" />
+    <Compile Include="Fuzzy\FuzzyObjects\WorkingFuzzySet.cs" />
     <Compile Include="Planning\PlanningObjects\Action.cs" />
     <Compile Include="Planning\PlanningObjects\CasualLink.cs" />
     <Compile Include="Planning\PlanningObjects\ConstantTerm.cs" />

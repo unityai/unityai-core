@@ -14,7 +14,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UnityAI.Core
+namespace UnityAI.Core.Planning
 {
     /// <summary>
     /// Represents the Precondition of an Action Object

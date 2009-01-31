@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<RuleBase name="game" correlation="1" inference="1" defuzzify="1">
+  <ContinuousRuleVariable name="view" start="0" end="3.1415">
+    <Shoulder name="visible" alpha="0.01" start="0" end="0.1396" type="1" />
+    <Shoulder name="outofview" alpha="0.01" start="0.1396" end="3.1415" type="2" />
+  </ContinuousRuleVariable>
+
+  <ContinuousRuleVariable name="quadrant" start="0" end="6.2831">
+    <Shoulder name="one" alpha="0.01" start="0" end="1.5707" type="1" />
+    <Triangle name="two" alpha="0.01" left="1.4000" center="2.3561" right="3.1415" />
+    <Triangle name="three" alpha="0.01" left="3.0415" center="3.9269" right="4.7123" />
+    <Shoulder name="four" alpha="0.01" start="4.6123" end="6.2831" type="2" />
+  </ContinuousRuleVariable>
+
+  <ContinuousRuleVariable name="action" start="0" end="100">
+    <Shoulder name="fire" alpha="0.01" start="0" end="20" type="1" />
+    <Triangle name="left" alpha="0.01" left="25" center="30" right="35" />
+    <Triangle name="right" alpha="0.01" left="40" center="50" right="60" />
+    <Shoulder name="hyperspace" alpha="0.01" start="65" end="100" type="2" />
+  </ContinuousRuleVariable>
+
+  <Rule name="firerule">
+    <CompareClause variablename="view" condition="2" hedge="" setname="visible" />
+    <AssignClause variablename="action" condition="1" hedge="" setname="fire" />
+  </Rule>
+
+  <Rule name="turnleft0">
+    <CompareClause variablename="view" condition="2" hedge="" setname="outofview" />
+    <CompareClause variablename="quadrant" condition="2" hedge="" setname="one" />
+    <AssignClause variablename="action" condition="1" hedge="" setname="left" />
+  </Rule>
+
+  <Rule name="turnright0">
+    <CompareClause variablename="view" condition="2" hedge="" setname="outofview" />
+    <CompareClause variablename="quadrant" condition="2" hedge="" setname="two" />
+    <AssignClause variablename="action" condition="1" hedge="" setname="right" />
+  </Rule>
+
+  <Rule name="turnright1">
+    <CompareClause variablename="view" condition="2" hedge="" setname="outofview" />
+    <CompareClause variablename="quadrant" condition="2" hedge="" setname="three" />
+    <AssignClause variablename="action" condition="1" hedge="" setname="right" />
+  </Rule>
+
+  <Rule name="turnleft1">
+    <CompareClause variablename="view" condition="2" hedge="" setname="outofview" />
+    <CompareClause variablename="quadrant" condition="2" hedge="" setname="four" />
+    <AssignClause variablename="action" condition="1" hedge="" setname="left" />
+  </Rule>
+</RuleBase>

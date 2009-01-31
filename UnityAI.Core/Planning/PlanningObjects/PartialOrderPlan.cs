@@ -15,7 +15,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace UnityAI.Core
+namespace UnityAI.Core.Planning
 {
     public class PartialOrderPlan
     {

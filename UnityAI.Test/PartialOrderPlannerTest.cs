@@ -1,4 +1,4 @@
-﻿using UnityAI.Core;
+﻿using UnityAI.Core.Planning;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
