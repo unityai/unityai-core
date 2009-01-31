@@ -53,7 +53,7 @@ namespace UnityAI.Core.Planning
                     if (action.Effects.Exists(
                         delegate(Predicate p)
                             {
-                                return p == pickedPrecondition;
+                                return p == pickedPrecondition && p.IsNegative == pickedPrecondition.IsNegative;
                             }))
                     {
                         pickedAction = action;

@@ -171,7 +171,7 @@ namespace UnityAI.Core.Planning
             {
                 if (moStartAction.Effects.Exists(delegate(Predicate p)
                             {
-                                return p == pred;
+                                return p == pred && p.IsNegative == pred.IsNegative;
                             }) == false
                     )
                 {
