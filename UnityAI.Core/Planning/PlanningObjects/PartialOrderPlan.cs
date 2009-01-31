@@ -126,10 +126,38 @@ namespace UnityAI.Core.Planning
         /// <param name="voAfter">After Action</param>
         public void AddOrderingConstraint(Action voBefore, Action voAfter)
         {
-            moOrderingConstraints.Add(new OrderingConstraint(voBefore, voAfter));
-            moOrderingConstraints.Add(new OrderingConstraint(moStartAction, voBefore));
-            if (voAfter.ActionIdentity != moFinishAction.ActionIdentity)
-                moOrderingConstraints.Add(new OrderingConstraint(voBefore, moFinishAction));
+            //Will adding this constraint cause a loop?
+            bool bLoopDetected = CheckLoop(voBefore, voAfter);
+
+            if (bLoopDetected == false)
+            {
+                moOrderingConstraints.Add(new OrderingConstraint(voBefore, voAfter));
+                moOrderingConstraints.Add(new OrderingConstraint(moStartAction, voBefore));
+                if (voAfter.Identity != moFinishAction.Identity)
+                    moOrderingConstraints.Add(new OrderingConstraint(voBefore, moFinishAction));
+            }
+            //TODO: throw exception?
+            //if this fails we need to backtrack in the plan and pick a different route
+        }
+
+        private bool CheckLoop(Action voBefore, Action voAfter)
+        {
+            if (voBefore == voAfter)
+                return true;
+
+            List<OrderingConstraint> oAfterList = moOrderingConstraints.FindAll(delegate(OrderingConstraint o)
+                                                                                    {
+                                                                                        return o.After == voBefore;
+                                                                                    }
+                                                                                    );
+
+            //We are seeing if there is a condition like A->B B->C C->A
+            foreach(OrderingConstraint after in oAfterList)
+            {
+                CheckLoop(voBefore, after.After);
+            }
+
+            return false;
         }
 
         /// <summary>
@@ -163,23 +191,35 @@ namespace UnityAI.Core.Planning
             //check for conflicts in the casual links
             foreach (CasualLink c in moCasualLinks)
             {
-                if (c.To.ActionIdentity != voAction.ActionIdentity)
+                if (c.To.Identity != voAction.Identity)
                 {
+                    //adding a negative predicate that cancels out a casual link
+                    //causes a conflict we can add an ordering constraint either B { C or C { A
                     bool bConflict = voAction.Effects.Exists(delegate(Predicate p)
                             {
                                 return
-                                    p.IsNegative == true && c.Achieves.CompareTo(p) == 0;
+                                    p.IsNegative != c.Achieves.IsNegative && c.Achieves == p;
                             });
                     if (bConflict == true)
                     {
-                        AddOrderingConstraint(c.To, voAction);
+                        //if no loop would occur by adding B { C then add it
+                        if (CheckLoop(c.To, voAction) == false)
+                        {
+                            AddOrderingConstraint(c.To, voAction); 
+                        }
+                        else //we have no choice then to try adding C { A
+                        {
+                            AddOrderingConstraint(voAction, c.From);
+                        }
                     }
                 }
             }
-
-            //TODO: Check the ordering contraints
         }
 
+        /// <summary>
+        /// TODO: Just temporary sort action method 
+        /// </summary>
+        /// <returns></returns>
         private List<Action> SortAction()
         {
             List<Action> oSorted = new List<Action>();
@@ -190,8 +230,8 @@ namespace UnityAI.Core.Planning
                     moOrderingConstraints.Find(
                         delegate(OrderingConstraint o)
                             {
-                                return o.Before.ActionIdentity == action.ActionIdentity ||
-                                       o.After.ActionIdentity == action.ActionIdentity;
+                                return o.Before.Identity == action.Identity ||
+                                       o.After.Identity == action.Identity;
                             });
                 if (oc == null)
                 {
@@ -200,9 +240,9 @@ namespace UnityAI.Core.Planning
                 else
                 {
                     //this action must occur before oc.After
-                    if (oc.Before.ActionIdentity == action.ActionIdentity)
+                    if (oc.Before.Identity == action.Identity)
                     {
-                        int iIndex = oSorted.FindIndex(delegate(Action a) { return a.ActionIdentity == oc.After.ActionIdentity; });
+                        int iIndex = oSorted.FindIndex(delegate(Action a) { return a.Identity == oc.After.Identity; });
                         if (iIndex > -1)
                             oSorted.Insert(iIndex,action);
                         else
@@ -210,7 +250,7 @@ namespace UnityAI.Core.Planning
                     }
                     else
                     {
-                        int iIndex = oSorted.FindIndex(delegate(Action a) { return a.ActionIdentity == oc.Before.ActionIdentity; });
+                        int iIndex = oSorted.FindIndex(delegate(Action a) { return a.Identity == oc.Before.Identity; });
                         if (iIndex > -1)
                             oSorted.Insert(iIndex+1,action);
                         else

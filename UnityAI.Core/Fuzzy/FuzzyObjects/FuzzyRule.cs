@@ -254,7 +254,7 @@ namespace UnityAI.Core.Fuzzy
                 else
                 {
                     // If there are no antecedents, there must at least be a consequent!
-                    Console.WriteLine("Error: FuzzyRule cannot fire" + msName);
+                    Console.Out.WriteLine("Error: FuzzyRule cannot fire" + msName);
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using UnityAI.Core.Planning;
+﻿using System;
+using UnityAI.Core.Planning;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -93,6 +94,11 @@ namespace UnityAI.Test
             Assert.IsTrue(plan != null);
 
             List<Action> theActions = plan.SortedActions;
+            foreach(Action action in theActions)
+            {
+                string sOut = string.Format("{0}", action.Identity.Name);
+                Console.Out.WriteLine(sOut);
+            }
         }
     }
 }

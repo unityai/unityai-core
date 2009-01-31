@@ -87,7 +87,7 @@ namespace UnityAI.Core.Fuzzy
                 }
                 catch (System.FormatException e)
                 {
-                    Console.WriteLine("Error: " + msName + " " + value);
+                    Console.Out.WriteLine("Error: " + msName + " " + value);
                 }
             }
 
@@ -248,7 +248,7 @@ namespace UnityAI.Core.Fuzzy
             }
             else
             {
-                Console.WriteLine("Error: Value is out of range " + msName);
+                Console.Out.WriteLine("Error: Value is out of range " + msName);
             }
         }
 
@@ -338,7 +338,7 @@ namespace UnityAI.Core.Fuzzy
             // The base set must, of course, exist!
             if (!SetExist(setName))
             {
-                System.Console.Out.WriteLine("Error: Unknown Set " + msName + " " + setName);
+                Console.Out.WriteLine("Error: Unknown Set " + msName + " " + setName);
             }
 
             // If the hedged set already exists, simply return it.

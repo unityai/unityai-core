@@ -54,7 +54,7 @@
     <Compile Include="Planning\PlanningObjects\EffectList.cs" />
     <Compile Include="Planning\PlanningObjects\OrderingConstraint.cs" />
     <Compile Include="Planning\PlanningObjects\PartialOrderPlan.cs" />
-    <Compile Include="Planning\PlanningObjects\PartialOrderPlanner.cs" />
+    <Compile Include="Planning\PartialOrderPlanner.cs" />
     <Compile Include="Planning\PlanningObjects\PreconditionList.cs" />
     <Compile Include="Planning\PlanningObjects\Predicate.cs" />
     <Compile Include="Planning\PlanningObjects\Term.cs" />

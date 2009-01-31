@@ -84,7 +84,10 @@ namespace UnityAI.Test
 
             ContinuousFuzzyRuleVariable action = target.FuzzyRules.GetVariable("action") as ContinuousFuzzyRuleVariable;
 
-            Console.WriteLine(action.GetFuzzyValue());
+            foreach(FuzzyRuleVariable variable in target.FuzzyRules.Variables.Values)
+            {
+                Console.Out.WriteLine(variable.ToString() +"=" + variable.GetNumericValue());
+            }
         }
 
         //Angle (Between Direction and Ship)	Quadrant	Result

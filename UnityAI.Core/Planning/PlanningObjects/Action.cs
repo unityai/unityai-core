@@ -28,7 +28,7 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// The predicate that represents this action
         /// </summary>
-        public Predicate ActionIdentity
+        public Predicate Identity
         {
             get { return moActionIdentity;  }
         }

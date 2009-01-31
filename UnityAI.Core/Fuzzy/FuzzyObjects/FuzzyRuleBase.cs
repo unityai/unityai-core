@@ -336,7 +336,7 @@ namespace UnityAI.Core.Fuzzy
             }
             else
             {
-                Console.WriteLine("Error: Invalid fuzzy set name " + sValue);
+                Console.Out.WriteLine("Error: Invalid fuzzy set name " + sValue);
             }
             return rhs;
         }
@@ -380,7 +380,7 @@ namespace UnityAI.Core.Fuzzy
             bool moreRules = true;
             List<FuzzyRule> tmpRuleSet = new List<FuzzyRule>(10);
 
-            Console.WriteLine(Environment.NewLine + "Processing conditional fuzzy rules ");
+            Console.Out.WriteLine(Environment.NewLine + "Processing conditional fuzzy rules ");
             while (moreRules)
             {
                 // Create a rule set:
@@ -426,7 +426,7 @@ namespace UnityAI.Core.Fuzzy
                 {
                     FuzzyRule rule = (FuzzyRule)tmpRuleSet[i];
 
-                    Console.WriteLine(Environment.NewLine + "Firing fuzzy rule: " + rule.Name);
+                    Console.Out.WriteLine(Environment.NewLine + "Firing fuzzy rule: " + rule.Name);
                     rule.Fire(mdAlphaCut, factBase);
                 }
 
@@ -445,7 +445,7 @@ namespace UnityAI.Core.Fuzzy
         /// <param name="factBase"></param>
         private void ProcessAssertionRules(System.Collections.BitArray factBase)
         {
-            Console.WriteLine(Environment.NewLine + "Processing unconditional fuzzy rules ");
+            Console.Out.WriteLine(Environment.NewLine + "Processing unconditional fuzzy rules ");
 
             if (moUncRuleList != null)
             {
