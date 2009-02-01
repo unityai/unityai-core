@@ -119,8 +119,8 @@ namespace UnityAI.Core.Fuzzy
         {
             moRuleBase = rb;
             msName = name;
-            moRdRefs = new System.Collections.BitArray(128);
-            moWrRefs = new System.Collections.BitArray(128);
+            moRdRefs = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
+            moWrRefs = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
             mbFiredFlag = false;
             moAntecedents = new List<FuzzyClause>(10);
             moAntecedents.Add(lhs);
@@ -145,8 +145,8 @@ namespace UnityAI.Core.Fuzzy
         {
             moRuleBase = rb;
             msName = name;
-            moRdRefs = new System.Collections.BitArray(128);
-            moWrRefs = new System.Collections.BitArray(128);
+            moRdRefs = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
+            moWrRefs = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
             mbFiredFlag = false;
             moAntecedents = new List<FuzzyClause>(10);
             for (int i = 0; i < lhsClauses.Length; i++)
@@ -173,8 +173,8 @@ namespace UnityAI.Core.Fuzzy
         {
             moRuleBase = rb;
             msName = name;
-            moRdRefs = new System.Collections.BitArray(128);
-            moWrRefs = new System.Collections.BitArray(128);
+            moRdRefs = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
+            moWrRefs = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
             mbFiredFlag = false;
             moAntecedents = new List<FuzzyClause>(10);
             moConsequent = rhs;

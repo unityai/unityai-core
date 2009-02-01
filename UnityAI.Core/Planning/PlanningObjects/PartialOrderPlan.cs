@@ -137,8 +137,12 @@ namespace UnityAI.Core.Planning
                 if (voAfter.Identity != moFinishAction.Identity)
                     moOrderingConstraints.Add(new OrderingConstraint(voBefore, moFinishAction));
             }
-            //TODO: throw exception?
-            //if this fails we need to backtrack in the plan and pick a different route
+            else
+            {
+                string sException = string.Format("Loop detected ordering {0} {{ {1}", voBefore.Identity.Name,
+                                                  voAfter.Identity.Name);
+                throw new ConsistencyCheckException(sException);
+            }
         }
 
         private bool CheckLoop(Action voBefore, Action voAfter)
@@ -146,16 +150,18 @@ namespace UnityAI.Core.Planning
             if (voBefore == voAfter)
                 return true;
 
-            List<OrderingConstraint> oAfterList = moOrderingConstraints.FindAll(delegate(OrderingConstraint o)
+            List<OrderingConstraint> oList = moOrderingConstraints.FindAll(delegate(OrderingConstraint o)
                                                                                     {
-                                                                                        return o.After == voBefore;
+                                                                                        return o.Before == voAfter;
                                                                                     }
                                                                                     );
 
             //We are seeing if there is a condition like A->B B->C C->A
-            foreach(OrderingConstraint after in oAfterList)
+            foreach(OrderingConstraint after in oList)
             {
-                CheckLoop(voBefore, after.After);
+                bool bCheck = CheckLoop(voBefore, after.After);
+                if (bCheck == true)
+                    return true;
             }
 
             return false;
@@ -187,6 +193,22 @@ namespace UnityAI.Core.Planning
             CheckPlanConsistent(voAction);
         }
 
+        public void RemoveAction(Action voAction, Predicate voPredicate)
+        {
+            moActions.Remove(voAction);
+            moCasualLinks.RemoveAll(delegate(CasualLink c)
+                                        {
+                                            return c.From == voAction && c.Achieves == voPredicate &&
+                                                   c.Achieves.IsNegative == voPredicate.IsNegative &&
+                                                   c.To == voPredicate.ParentAction;
+                                        });
+            moOrderingConstraints.RemoveAll(delegate(OrderingConstraint o)
+                                                {
+                                                    return o.Before == voAction && o.After == voPredicate.ParentAction;
+                                                });
+            //TODO: Clean up the Start and Finish ones as well
+        }
+
         private void CheckPlanConsistent(Action voAction)
         {
             //check for conflicts in the casual links
@@ -204,13 +226,19 @@ namespace UnityAI.Core.Planning
                     if (bConflict == true)
                     {
                         //if no loop would occur by adding B { C then add it
-                        if (CheckLoop(c.To, voAction) == false)
+                        if (c.To != moFinishAction && CheckLoop(c.To, voAction) == false)
                         {
                             AddOrderingConstraint(c.To, voAction); 
                         }
-                        else //we have no choice then to try adding C { A
+                        else if (c.From != moStartAction) //we have no choice then to try adding C { A
                         {
                             AddOrderingConstraint(voAction, c.From);
+                        }
+                        else
+                        {
+                            string sException = string.Format("{0} {{ {1} and {1} {{ {2} invalid.", c.To.Identity.Name,
+                                          voAction.Identity.Name, c.From.Identity.Name);
+                            throw new ConsistencyCheckException(sException);
                         }
                     }
                 }

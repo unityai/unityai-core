@@ -50,6 +50,7 @@
     <Compile Include="Fuzzy\FuzzyObjects\WorkingFuzzySet.cs" />
     <Compile Include="Planning\PlanningObjects\Action.cs" />
     <Compile Include="Planning\PlanningObjects\CasualLink.cs" />
+    <Compile Include="Planning\PlanningObjects\ConsistencyCheckException.cs" />
     <Compile Include="Planning\PlanningObjects\ConstantTerm.cs" />
     <Compile Include="Planning\PlanningObjects\EffectList.cs" />
     <Compile Include="Planning\PlanningObjects\OrderingConstraint.cs" />

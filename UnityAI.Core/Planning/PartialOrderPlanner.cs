@@ -40,6 +40,7 @@ namespace UnityAI.Core.Planning
         public PartialOrderPlan PlanOrder(IEnumerable<Predicate> voInitialState, IEnumerable<Predicate> voGoalState)
         {
             PartialOrderPlan plan = new PartialOrderPlan(voInitialState, voGoalState);
+            List<Action> oSkipList = new List<Action>();
 
             //while we have open preconditions
             while(plan.HasOpenPreconditions)
@@ -49,6 +50,9 @@ namespace UnityAI.Core.Planning
 
                 foreach(Action action in moActions)
                 {
+                    if (oSkipList.Contains(action))
+                        continue; 
+
                     //if an action has the effect of the picked precondtion
                     if (action.Effects.Exists(
                         delegate(Predicate p)
@@ -61,6 +65,7 @@ namespace UnityAI.Core.Planning
                     }
                 }
 
+                //TODO: Backtrack
                 if (pickedAction == null)
                     throw new Exception("No action to pick");
 
@@ -68,9 +73,19 @@ namespace UnityAI.Core.Planning
                 
                 plan.AddOrderingConstraint(pickedAction, pickedPrecondition.ParentAction);
 
-                plan.AddAction(pickedAction);
-
-                plan.OpenPreconditions.Remove(pickedPrecondition);
+                try
+                {
+                    plan.AddAction(pickedAction);
+                    plan.OpenPreconditions.Remove(pickedPrecondition);
+                    oSkipList.Clear();
+                }
+                catch (ConsistencyCheckException ex)
+                {
+                    Console.Out.WriteLine("Can't add action results in consistency failure: " + ex.Message);
+                    //TODO: remove causual link and ordering constraint, and re-pick an action - may need to back track
+                    plan.RemoveAction(pickedAction, pickedPrecondition);
+                    oSkipList.Add(pickedAction);
+                }
             }
 
             return plan;

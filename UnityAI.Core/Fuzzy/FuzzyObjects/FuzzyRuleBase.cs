@@ -184,7 +184,7 @@ namespace UnityAI.Core.Fuzzy
             moRuleList = new List<FuzzyRule>(10);
             moCndRuleList = new List<FuzzyRule>(10);
             moUncRuleList = new List<FuzzyRule>(10);
-            moFbInitial = new System.Collections.BitArray(128);
+            moFbInitial = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
             msName = vsName;
         }
         #endregion
@@ -368,7 +368,7 @@ namespace UnityAI.Core.Fuzzy
             List<FuzzyRule> temp_fuzzylist;
 
             // Fact Base
-            moFbInitial = new System.Collections.BitArray(128);
+            moFbInitial = new System.Collections.BitArray(Constants.FUZZY_MAXVALUES);
         }
         
         /// <summary>
