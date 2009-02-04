@@ -69,7 +69,7 @@ namespace UnityAI.Core.Planning
                 if (pickedAction == null)
                     throw new Exception("No action to pick");
 
-                plan.AddCasualLink(pickedAction, pickedPrecondition, pickedPrecondition.ParentAction);
+                plan.AddCausalLink(pickedAction, pickedPrecondition, pickedPrecondition.ParentAction);
                 
                 plan.AddOrderingConstraint(pickedAction, pickedPrecondition.ParentAction);
 

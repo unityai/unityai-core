@@ -3,7 +3,7 @@
 // Developed For:  UnityAI
 // License: Artistic License 2.0
 //
-// Description:   Represents a Casual Link in a Partial Order Plan
+// Description:   Represents a Causal Link in a Partial Order Plan
 //
 // Modification Notes:
 // Date		Author        	Notes
@@ -16,7 +16,7 @@ using System.Text;
 
 namespace UnityAI.Core.Planning
 {
-    public class CasualLink
+    public class CausalLink
     {
         #region Fields
         private Action moFromAction;
@@ -55,12 +55,12 @@ namespace UnityAI.Core.Planning
 
         #region Constructor
         /// <summary>
-        /// Creates a CasualLink From Achieves To
+        /// Creates a CausalLink From Achieves To
         /// </summary>
         /// <param name="voFrom">The From Action</param>
         /// <param name="voAchieves">The Predicates that Achieves</param>
         /// <param name="voTo">The To Action</param>
-        public CasualLink(Action voFrom, Predicate voAchieves, Action voTo)
+        public CausalLink(Action voFrom, Predicate voAchieves, Action voTo)
         {
             moFromAction = voFrom;
             moAchieves = voAchieves;

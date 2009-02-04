@@ -26,7 +26,7 @@ namespace UnityAI.Core.Planning
         private Action moFinishAction;
         private List<Action> moActions;
         private List<OrderingConstraint> moOrderingConstraints;
-        private List<CasualLink> moCasualLinks;
+        private List<CausalLink> moCausalLinks;
         private List<Predicate> moOpenPreconditions;
         #endregion
 
@@ -61,7 +61,7 @@ namespace UnityAI.Core.Planning
             moActions = new List<Action>();
             moOrderingConstraints = new List<OrderingConstraint>();
             moOpenPreconditions = new List<Predicate>();
-            moCasualLinks = new List<CasualLink>();
+            moCausalLinks = new List<CausalLink>();
 
             moStartAction = Action.CreateStart();
             moFinishAction = Action.CreateFinish();
@@ -110,14 +110,14 @@ namespace UnityAI.Core.Planning
         }
 
         /// <summary>
-        /// Add a Casual Link
+        /// Add a Causal Link
         /// </summary>
         /// <param name="voFrom">From Action</param>
         /// <param name="voAchieves">The Predicate that Achieves</param>
         /// <param name="voTo">To Action</param>
-        public void AddCasualLink(Action voFrom, Predicate voAchieves, Action voTo)
+        public void AddCausalLink(Action voFrom, Predicate voAchieves, Action voTo)
         {
-            moCasualLinks.Add(new CasualLink(voFrom, voAchieves, voTo));
+            moCausalLinks.Add(new CausalLink(voFrom, voAchieves, voTo));
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace UnityAI.Core.Planning
                 }
                 else
                 {
-                    this.AddCasualLink(moStartAction, pred, voAction);
+                    this.AddCausalLink(moStartAction, pred, voAction);
                 }
             }
 
@@ -196,7 +196,7 @@ namespace UnityAI.Core.Planning
         public void RemoveAction(Action voAction, Predicate voPredicate)
         {
             moActions.Remove(voAction);
-            moCasualLinks.RemoveAll(delegate(CasualLink c)
+            moCausalLinks.RemoveAll(delegate(CausalLink c)
                                         {
                                             return c.From == voAction && c.Achieves == voPredicate &&
                                                    c.Achieves.IsNegative == voPredicate.IsNegative &&
@@ -211,12 +211,12 @@ namespace UnityAI.Core.Planning
 
         private void CheckPlanConsistent(Action voAction)
         {
-            //check for conflicts in the casual links
-            foreach (CasualLink c in moCasualLinks)
+            //check for conflicts in the Causal Links
+            foreach (CausalLink c in moCausalLinks)
             {
                 if (c.To.Identity != voAction.Identity)
                 {
-                    //adding a negative predicate that cancels out a casual link
+                    //adding a negative predicate that cancels out a Causal Link
                     //causes a conflict we can add an ordering constraint either B { C or C { A
                     bool bConflict = voAction.Effects.Exists(delegate(Predicate p)
                             {
