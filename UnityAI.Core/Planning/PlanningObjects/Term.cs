@@ -152,5 +152,16 @@ namespace UnityAI.Core.Planning
             return vsName.GetHashCode() ^ veTermType.GetHashCode();
         }
         #endregion
+
+        #region Methods
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("{");
+            sb.Append(Name);
+            sb.Append("}");
+            return sb.ToString();
+        }
+        #endregion
     }
 }

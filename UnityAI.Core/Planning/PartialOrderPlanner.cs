@@ -54,6 +54,10 @@ namespace UnityAI.Core.Planning
                         continue; 
 
                     //if an action has the effect of the picked precondtion
+                    action.Effects.ForEach(delegate(Predicate p)
+                    {
+                        Console.Out.WriteLine(p + " " + pickedPrecondition + "  " + (pickedPrecondition == p));
+                    });
                     if (action.Effects.Exists(
                         delegate(Predicate p)
                             {

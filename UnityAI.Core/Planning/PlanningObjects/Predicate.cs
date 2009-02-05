@@ -88,6 +88,28 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region IComparable Members
+        public static bool operator ==(Predicate p1, Predicate p2)
+        {
+            // If both are null, or both are same instance, return true.
+            if (System.Object.ReferenceEquals(p1, p2))
+                return true;
+  
+            // If one is null, but not both, return false.
+            if (((object)p1 == null) || ((object)p2 == null))
+                return false;
+  
+            return p1.CompareTo(p2) == 0;
+        }
+
+        public static bool operator !=(Predicate p1, Predicate p2)
+        {
+            return !(p1 == p2);
+        }
+
+        public override bool Equals(object obj)
+        {
+            return this.CompareTo(obj) == 0;
+        }
 
         public int CompareTo(object obj)
         {
@@ -158,6 +180,24 @@ namespace UnityAI.Core.Planning
                 hashCode ^= parentAction.GetHashCode();
             hashCode ^= isNegative.GetHashCode();
             return hashCode;
+        }
+        #endregion
+
+        #region Methods
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Predicate:");
+            if (mbIsNegative)
+                sb.Append("~");
+            sb.Append(Name);
+            sb.Append("  ");
+            foreach (Term t in Parameters)
+            {
+                sb.Append(t.ToString());
+                sb.Append(",");
+            }
+            return sb.ToString();
         }
         #endregion
     }

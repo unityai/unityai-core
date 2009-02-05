@@ -21,5 +21,19 @@ namespace UnityAI.Core.Planning
     /// </summary>
     public class EffectList : List<Predicate>
     {
+        #region Methods
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("[");
+            foreach (Predicate p in this)
+            {
+                sb.Append(p.ToString());
+                sb.Append(",");
+            }
+            sb.Append("]");
+            return sb.ToString();
+        }
+        #endregion
     }
 }

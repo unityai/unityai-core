@@ -77,6 +77,19 @@ namespace UnityAI.Core.Planning
             voPredicate.ParentAction = this;
             moEffectList.Add(voPredicate);
         }
+
+        public override string ToString()
+        {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("Action: [");
+            sb.Append(moActionIdentity.ToString());
+            sb.Append("  C= ");
+            sb.Append(Preconditions.ToString());
+            sb.Append("  E= ");
+            sb.Append(Effects.ToString());
+            sb.Append("]");
+            return sb.ToString();
+        }
         #endregion
 
         #region Static Methods
