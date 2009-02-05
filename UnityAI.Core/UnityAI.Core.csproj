@@ -34,6 +34,10 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="UnityEngine, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\External libraries\UnityEngine.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Fuzzy\FuzzyController.cs" />
@@ -53,6 +57,7 @@
     <Compile Include="Planning\PlanningObjects\ConsistencyCheckException.cs" />
     <Compile Include="Planning\PlanningObjects\ConstantTerm.cs" />
     <Compile Include="Planning\PlanningObjects\EffectList.cs" />
+    <Compile Include="Planning\PlanningObjects\Goal.cs" />
     <Compile Include="Planning\PlanningObjects\OrderingConstraint.cs" />
     <Compile Include="Planning\PlanningObjects\PartialOrderPlan.cs" />
     <Compile Include="Planning\PartialOrderPlanner.cs" />
