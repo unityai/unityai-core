@@ -123,14 +123,44 @@ namespace UnityAI.Core.Planning
             }
         }
 
-        public static bool operator == (Predicate p1, Predicate p2)
+        /// <summary>
+        /// Calculates the predicate's  hashcode
+        /// </summary>
+        /// <returns>Hascode</returns>
+        public override int GetHashCode()
         {
-            return p1.CompareTo(p2) == 0;
+            return CalculateHashCode(this);
         }
 
-        public static bool operator !=(Predicate p1, Predicate p2)
+        /// <summary>
+        /// Calculates a hashcode for a predicate
+        /// </summary>
+        /// <param name="predicate">Predicate to evaluate</param>
+        /// <returns>Hashcode</returns>
+        /// <remarks>Written separately so that it can be used for calculating hashes on predicat caching</remarks>
+        protected static int CalculateHashCode(Predicate predicate)
         {
-            return !(p1 == p2);
+            return CalculateHashCode(predicate.Name, predicate.Parameters, predicate.ParentAction, predicate.IsNegative);
+        }
+
+        /// <summary>
+        /// Calculates a hashcode for a predicate's parameters
+        /// </summary>
+        /// <param name="name">Predicate name</param>
+        /// <param name="parameters">Predicate parameters</param>
+        /// <param name="parentAction">Parent action</param>
+        /// <param name="isNegative">Is the predicate negative?</param>
+        /// <returns>Hashcode</returns>
+        /// <remarks>Written separately so that it can be used for calculating hashes on predicat caching</remarks>
+        public static int CalculateHashCode(string name, List<Term> parameters, Action parentAction, bool isNegative)
+        {
+            int hashCode = name.GetHashCode();
+            if (parameters != null)
+                hashCode ^= parameters.GetHashCode();
+            if (parentAction != null)
+                hashCode ^= parentAction.GetHashCode();
+            hashCode ^= isNegative.GetHashCode();
+            return hashCode;
         }
         #endregion
     }
