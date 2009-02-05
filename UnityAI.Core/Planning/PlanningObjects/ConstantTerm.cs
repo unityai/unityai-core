@@ -5,10 +5,7 @@
 //
 // Description:   Represents a Constant Term in a Partial Order Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy, RJMendez 
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -20,13 +17,29 @@ namespace UnityAI.Core.Planning
     {
         #region Constructors
         /// <summary>
-        /// Constuct a Constant Term
+        /// Construct a Constant Term
         /// </summary>
         /// <param name="vsName"></param>
-        public ConstantTerm(string vsName)
+        protected ConstantTerm(string name)
         {
-            Name = vsName;
+            msName = name;
             meTermType = EnumTermType.Constant;
+        }
+        #endregion
+
+        #region Factory methods
+        public static ConstantTerm CreateTerm(string name)
+        {
+            Term term = Term.FindTerm(name, EnumTermType.Constant);
+            ConstantTerm ct = null;
+            if (term != null)
+                ct = term as ConstantTerm;
+            else
+            {
+                ct = new ConstantTerm(name);
+                Term.AddTerm(ct);
+            }
+            return ct;
         }
         #endregion
     }
