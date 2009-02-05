@@ -7,3 +7,5 @@ UnityAI.Test/bin/*
 UnityAI.Test/obj/*
 UnityAI.4.1.resharper.user
 UnityAI.suo
+UnityAI.user*
+*.pidb
