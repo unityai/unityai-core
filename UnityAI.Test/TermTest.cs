@@ -67,7 +67,7 @@ namespace UnityAI.Test
             String name = "A Constant Term";
             Term term = Term.FindTerm(name, EnumTermType.Constant);
             Assert.IsNull(term);
-            ConstantTerm ct = ConstantTerm.CreateTerm(name);
+            ConstantTerm ct = ConstantTerm.Create(name);
             Assert.IsNotNull(ct);
             term = Term.FindTerm(name, EnumTermType.Constant);
             Assert.IsNotNull(term);

@@ -28,7 +28,7 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Factory methods
-        public static ConstantTerm CreateTerm(string name)
+        public static ConstantTerm Create(string name)
         {
             Term term = Term.FindTerm(name, EnumTermType.Constant);
             ConstantTerm ct = null;
