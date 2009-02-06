@@ -19,7 +19,7 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Construct a Constant Term
         /// </summary>
-        /// <param name="vsName"></param>
+        /// <param name="name"></param>
         protected ConstantTerm(string name)
         {
             msName = name;
@@ -28,6 +28,11 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Factory methods
+        /// <summary>
+        /// Create the Constant Term
+        /// </summary>
+        /// <param name="name">Name of the Constant</param>
+        /// <returns>ConstantTerm</returns>
         public static ConstantTerm Create(string name)
         {
             Term term = Term.FindTerm(name, EnumTermType.Constant);
@@ -40,6 +45,17 @@ namespace UnityAI.Core.Planning
                 Term.AddTerm(ct);
             }
             return ct;
+        }
+
+        /// <summary>
+        /// Implicit Operator to allow strings to used in place of params
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
+        public static implicit operator ConstantTerm(string name)  // implicit string to constant term conversion operator
+        {
+            Console.Out.WriteLine("implict conversion to ConstantTerm occurred");
+            return Create(name);  // implicit conversion
         }
         #endregion
     }

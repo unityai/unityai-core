@@ -108,10 +108,10 @@ namespace UnityAI.Test
         [TestMethod()]
         public void PlanOrderTestTireProblem()
         {
-            Action RemoveSpare = new Action(new Predicate("Remove", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            RemoveSpare.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            RemoveSpare.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            RemoveSpare.AddEffect(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            Action RemoveSpare = new Action(new Predicate("Remove", false, new ConstantTerm[] { "Spare", "Trunk" }));
+            RemoveSpare.AddPrecondition(new Predicate("At", false, new ConstantTerm[] { "Spare" , "Trunk" }));
+            RemoveSpare.AddEffect(new Predicate("At", true, new ConstantTerm[] { "Spare", "Trunk" }));
+            RemoveSpare.AddEffect(new Predicate("At", false, new ConstantTerm[] { "Spare", "Ground" }));
 
             Action RemoveFlat = new Action(new Predicate("Remove", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
             RemoveFlat.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));

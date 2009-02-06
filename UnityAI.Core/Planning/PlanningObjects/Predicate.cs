@@ -18,7 +18,6 @@ namespace UnityAI.Core.Planning
         #region Fields
         private string msName = string.Empty;
         private List<Term> moParameters = null;
-        private Action moParentAction = null;
         private bool mbIsNegative = false;
         #endregion
 
@@ -47,15 +46,6 @@ namespace UnityAI.Core.Planning
         {
             get { return mbIsNegative;  }
             set { mbIsNegative = value; }
-        }
-
-        /// <summary>
-        /// The Parent Action
-        /// </summary>
-        public Action ParentAction
-        {
-            get { return moParentAction;  }
-            set { moParentAction = value; }
         }
         #endregion
 
@@ -159,7 +149,7 @@ namespace UnityAI.Core.Planning
         /// <remarks>Written separately so that it can be used for calculating hashes on predicat caching</remarks>
         protected static int CalculateHashCode(Predicate predicate)
         {
-            return CalculateHashCode(predicate.Name, predicate.Parameters, predicate.ParentAction, predicate.IsNegative);
+            return CalculateHashCode(predicate.Name, predicate.Parameters, predicate.IsNegative);
         }
 
         /// <summary>
@@ -167,23 +157,29 @@ namespace UnityAI.Core.Planning
         /// </summary>
         /// <param name="name">Predicate name</param>
         /// <param name="parameters">Predicate parameters</param>
-        /// <param name="parentAction">Parent action</param>
         /// <param name="isNegative">Is the predicate negative?</param>
         /// <returns>Hashcode</returns>
         /// <remarks>Written separately so that it can be used for calculating hashes on predicat caching</remarks>
-        public static int CalculateHashCode(string name, List<Term> parameters, Action parentAction, bool isNegative)
+        public static int CalculateHashCode(string name, IEnumerable<Term> parameters, bool isNegative)
         {
             int hashCode = name.GetHashCode();
             if (parameters != null)
-                hashCode ^= parameters.GetHashCode();
-            if (parentAction != null)
-                hashCode ^= parentAction.GetHashCode();
+            {
+                foreach (var term in parameters)
+                {
+                    hashCode ^= term.GetHashCode();
+                }
+            }
             hashCode ^= isNegative.GetHashCode();
             return hashCode;
         }
         #endregion
 
         #region Methods
+        /// <summary>
+        /// String Representation of the Predicate
+        /// </summary>
+        /// <returns>Predicate:{negation}{name}({parameters})</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -191,12 +187,17 @@ namespace UnityAI.Core.Planning
             if (mbIsNegative)
                 sb.Append("~");
             sb.Append(Name);
-            sb.Append("  ");
-            foreach (Term t in Parameters)
+            sb.Append("(");
+            if (Parameters != null && Parameters.Count > 0)
             {
-                sb.Append(t.ToString());
-                sb.Append(",");
+                foreach (Term t in Parameters)
+                {
+                    sb.Append(t.ToString());
+                    sb.Append(",");
+                }
+                sb.Length--;
             }
+            sb.Append(")");
             return sb.ToString();
         }
         #endregion

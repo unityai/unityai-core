@@ -22,6 +22,10 @@ namespace UnityAI.Core.Planning
     public class PreconditionList : List<Predicate>
     {
         #region Methods
+        /// <summary>
+        /// String Representation of the PreconditionList
+        /// </summary>
+        /// <returns>[ {Predicates} ]</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

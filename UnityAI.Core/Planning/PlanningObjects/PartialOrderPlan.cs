@@ -27,7 +27,7 @@ namespace UnityAI.Core.Planning
         private List<Action> moActions;
         private List<OrderingConstraint> moOrderingConstraints;
         private List<CausalLink> moCausalLinks;
-        private List<Predicate> moOpenPreconditions;
+        private List<ActionPredicatePair> moOpenPreconditions;
         #endregion
 
         #region Properties
@@ -42,7 +42,7 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// The Open Preconditions
         /// </summary>
-        public List<Predicate> OpenPreconditions
+        public List<ActionPredicatePair> OpenPreconditions
         {
             get { return moOpenPreconditions;  }
         }
@@ -60,7 +60,7 @@ namespace UnityAI.Core.Planning
             moGoalState = new List<Predicate>();
             moActions = new List<Action>();
             moOrderingConstraints = new List<OrderingConstraint>();
-            moOpenPreconditions = new List<Predicate>();
+            moOpenPreconditions = new List<ActionPredicatePair>();
             moCausalLinks = new List<CausalLink>();
 
             moStartAction = Action.CreateStart();
@@ -90,7 +90,7 @@ namespace UnityAI.Core.Planning
                             }) == false
                     )
                 {
-                    moOpenPreconditions.Add(pred);
+                    moOpenPreconditions.Add(new ActionPredicatePair(moFinishAction, pred));
                 }
             }
         }
@@ -101,7 +101,7 @@ namespace UnityAI.Core.Planning
         /// Randomly pick an open precondition
         /// </summary>
         /// <returns></returns>
-        public Predicate PickOpenPrecondition()
+        public ActionPredicatePair PickOpenPrecondition()
         {
             Random rand = new Random((int)DateTime.Now.Ticks);
             int i = rand.Next(0, moOpenPreconditions.Count);
@@ -182,7 +182,7 @@ namespace UnityAI.Core.Planning
                             }) == false
                     )
                 {
-                    moOpenPreconditions.Add(pred);
+                    moOpenPreconditions.Add(new ActionPredicatePair(voAction, pred));
                 }
                 else
                 {
@@ -193,22 +193,31 @@ namespace UnityAI.Core.Planning
             CheckPlanConsistent(voAction);
         }
 
-        public void RemoveAction(Action voAction, Predicate voPredicate)
+        /// <summary>
+        /// Remove the Action
+        /// </summary>
+        /// <param name="voAction">Action to Remove</param>
+        /// <param name="voActionPredicatePair">Action-Predicate Pair</param>
+        public void RemoveAction(Action voAction, ActionPredicatePair voActionPredicatePair)
         {
             moActions.Remove(voAction);
             moCausalLinks.RemoveAll(delegate(CausalLink c)
                                         {
-                                            return c.From == voAction && c.Achieves == voPredicate &&
-                                                   c.Achieves.IsNegative == voPredicate.IsNegative &&
-                                                   c.To == voPredicate.ParentAction;
+                                            return c.From == voAction && c.Achieves == voActionPredicatePair.Second &&
+                                                   c.Achieves.IsNegative == voActionPredicatePair.Second.IsNegative &&
+                                                   c.To == voActionPredicatePair.First;
                                         });
             moOrderingConstraints.RemoveAll(delegate(OrderingConstraint o)
                                                 {
-                                                    return o.Before == voAction && o.After == voPredicate.ParentAction;
+                                                    return o.Before == voAction && o.After == voActionPredicatePair.First;
                                                 });
             //TODO: Clean up the Start and Finish ones as well
         }
 
+        /// <summary>
+        /// Check the Plan for Consistency
+        /// </summary>
+        /// <param name="voAction"></param>
         private void CheckPlanConsistent(Action voAction)
         {
             //check for conflicts in the Causal Links

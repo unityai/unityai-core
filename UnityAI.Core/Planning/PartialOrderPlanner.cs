@@ -45,7 +45,7 @@ namespace UnityAI.Core.Planning
             //while we have open preconditions
             while(plan.HasOpenPreconditions)
             {
-                Predicate pickedPrecondition = plan.PickOpenPrecondition();
+                ActionPredicatePair pickedPair = plan.PickOpenPrecondition();
                 Action pickedAction = null;
 
                 foreach(Action action in moActions)
@@ -56,12 +56,12 @@ namespace UnityAI.Core.Planning
                     //if an action has the effect of the picked precondtion
                     action.Effects.ForEach(delegate(Predicate p)
                     {
-                        Console.Out.WriteLine(p + " " + pickedPrecondition + "  " + (pickedPrecondition == p));
+                        Console.Out.WriteLine(p + " " + pickedPair.Second + "  " + (pickedPair.Second == p));
                     });
                     if (action.Effects.Exists(
                         delegate(Predicate p)
                             {
-                                return p == pickedPrecondition && p.IsNegative == pickedPrecondition.IsNegative;
+                                return p == pickedPair.Second && p.IsNegative == pickedPair.Second.IsNegative;
                             }))
                     {
                         pickedAction = action;
@@ -73,21 +73,21 @@ namespace UnityAI.Core.Planning
                 if (pickedAction == null)
                     throw new Exception("No action to pick");
 
-                plan.AddCausalLink(pickedAction, pickedPrecondition, pickedPrecondition.ParentAction);
+                plan.AddCausalLink(pickedAction, pickedPair.Second, pickedPair.First);
                 
-                plan.AddOrderingConstraint(pickedAction, pickedPrecondition.ParentAction);
+                plan.AddOrderingConstraint(pickedAction, pickedPair.First);
 
                 try
                 {
                     plan.AddAction(pickedAction);
-                    plan.OpenPreconditions.Remove(pickedPrecondition);
+                    plan.OpenPreconditions.Remove(pickedPair);
                     oSkipList.Clear();
                 }
                 catch (ConsistencyCheckException ex)
                 {
                     Console.Out.WriteLine("Can't add action results in consistency failure: " + ex.Message);
                     //TODO: remove causual link and ordering constraint, and re-pick an action - may need to back track
-                    plan.RemoveAction(pickedAction, pickedPrecondition);
+                    plan.RemoveAction(pickedAction, pickedPair);
                     oSkipList.Add(pickedAction);
                 }
             }

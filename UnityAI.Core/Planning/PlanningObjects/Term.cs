@@ -72,6 +72,9 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Static methods
+        /// <summary>
+        /// Initialize the Cache
+        /// </summary>
         public static void InitializeCache()
         {
             moCreatedTerms = new Dictionary<int, Term>();
@@ -154,6 +157,10 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Methods
+        /// <summary>
+        /// String Representaion of the Term
+        /// </summary>
+        /// <returns>{ {Name} }</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();

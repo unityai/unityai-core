@@ -64,7 +64,6 @@ namespace UnityAI.Core.Planning
         /// <param name="voPredicate">A Predicate to Add</param>
         public void AddPrecondition(Predicate voPredicate)
         {
-            voPredicate.ParentAction = this;
             moPreconditionList.Add(voPredicate);
         }
 
@@ -74,7 +73,6 @@ namespace UnityAI.Core.Planning
         /// <param name="voPredicate">A Predicate to Add</param>
         public void AddEffect(Predicate voPredicate)
         {
-            voPredicate.ParentAction = this;
             moEffectList.Add(voPredicate);
         }
 
