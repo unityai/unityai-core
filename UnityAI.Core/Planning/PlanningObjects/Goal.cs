@@ -5,7 +5,7 @@
 //
 // Description:   Represents a Goal in a plan
 //
-// Authors: RJMendez
+// Authors: RJMendez, SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -14,11 +14,12 @@ using UnityEngine;
 
 namespace UnityAI.Core.Planning
 {
+    [Serializable]
     public class Goal: IComparable
     {
         #region Fields
-        Predicate moPredicate;
-        float mfDesirability;
+        private Predicate moPredicate;
+        private float mfDesirability;
         #endregion 
 
         #region Public properties
@@ -41,7 +42,6 @@ namespace UnityAI.Core.Planning
         }
         #endregion
 
-
         #region Constructors
         /// <summary>
         /// Creates a goal
@@ -55,8 +55,12 @@ namespace UnityAI.Core.Planning
         }
         #endregion
 
-
         #region IComparable Members
+        /// <summary>
+        /// Compare this goal to other goals
+        /// </summary>
+        /// <param name="obj">Object to Compare</param>
+        /// <returns>Comparison</returns>
         public int CompareTo(object obj)
         {
             if (obj == null)

@@ -6,10 +6,7 @@
 // Description:   Represents a Partial Order Plan in a Partial Order 
 //                Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -24,9 +21,13 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Constructor
-        public PartialOrderPlanner(params Action[] voActions)
+        /// <summary>
+        /// Create the Planner
+        /// </summary>
+        /// <param name="actions">Actions</param>
+        public PartialOrderPlanner(params Action[] actions)
         {
-            moActions = new List<Action>(voActions);
+            moActions = new List<Action>(actions);
         }
         #endregion
 
@@ -34,12 +35,12 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Plan the Order using POP Alogorithm
         /// </summary>
-        /// <param name="voInitialState">Initial Predicates</param>
-        /// <param name="voGoalState">Goal Predicates</param>
+        /// <param name="initialState">Initial Predicates</param>
+        /// <param name="goalState">Goal Predicates</param>
         /// <returns></returns>
-        public PartialOrderPlan PlanOrder(IEnumerable<Predicate> voInitialState, IEnumerable<Predicate> voGoalState)
+        public PartialOrderPlan PlanOrder(IEnumerable<Predicate> initialState, IEnumerable<Predicate> goalState)
         {
-            PartialOrderPlan plan = new PartialOrderPlan(voInitialState, voGoalState);
+            PartialOrderPlan plan = new PartialOrderPlan(initialState, goalState);
             List<Action> oSkipList = new List<Action>();
 
             //while we have open preconditions
@@ -56,13 +57,9 @@ namespace UnityAI.Core.Planning
                     //if an action has the effect of the picked precondtion
                     action.Effects.ForEach(delegate(Predicate p)
                     {
-                        Console.Out.WriteLine(p + " " + pickedPair.Second + "  " + (pickedPair.Second == p));
+                        Console.Out.WriteLine(p + " " + pickedPair.Predicate + "  " + (pickedPair.Predicate == p));
                     });
-                    if (action.Effects.Exists(
-                        delegate(Predicate p)
-                            {
-                                return p == pickedPair.Second && p.IsNegative == pickedPair.Second.IsNegative;
-                            }))
+                    if (action.Effects.Contains(pickedPair.Predicate))
                     {
                         pickedAction = action;
                         break;
@@ -73,9 +70,9 @@ namespace UnityAI.Core.Planning
                 if (pickedAction == null)
                     throw new Exception("No action to pick");
 
-                plan.AddCausalLink(pickedAction, pickedPair.Second, pickedPair.First);
+                plan.AddCausalLink(pickedAction, pickedPair.Predicate, pickedPair.Action);
                 
-                plan.AddOrderingConstraint(pickedAction, pickedPair.First);
+                plan.AddOrderingConstraint(pickedAction, pickedPair.Action);
 
                 try
                 {

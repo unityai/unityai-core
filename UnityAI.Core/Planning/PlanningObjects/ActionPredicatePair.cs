@@ -13,6 +13,7 @@ using System.Text;
 
 namespace UnityAI.Core.Planning
 {
+    [Serializable]
     public class ActionPredicatePair : Pair<Action, Predicate>
     {
         #region Properties

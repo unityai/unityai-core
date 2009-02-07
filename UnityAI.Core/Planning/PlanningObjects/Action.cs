@@ -5,10 +5,7 @@
 //
 // Description:   Represents an Action in a Partial Order Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -16,6 +13,7 @@ using System.Text;
 
 namespace UnityAI.Core.Planning
 {
+    [Serializable]
     public class Action
     {
         #region Field
@@ -51,9 +49,13 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Constructors
-        public Action(Predicate voActionIdentity)
+        /// <summary>
+        /// Create an Action
+        /// </summary>
+        /// <param name="actionIdentity"></param>
+        public Action(Predicate actionIdentity)
         {
-            moActionIdentity = voActionIdentity;
+            moActionIdentity = actionIdentity;
         }
         #endregion
 
@@ -61,21 +63,25 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Add a Precondition
         /// </summary>
-        /// <param name="voPredicate">A Predicate to Add</param>
-        public void AddPrecondition(Predicate voPredicate)
+        /// <param name="predicate">A Predicate to Add</param>
+        public void AddPrecondition(Predicate predicate)
         {
-            moPreconditionList.Add(voPredicate);
+            moPreconditionList.Add(predicate);
         }
 
         /// <summary>
         /// Add an Effect to the Effects
         /// </summary>
-        /// <param name="voPredicate">A Predicate to Add</param>
-        public void AddEffect(Predicate voPredicate)
+        /// <param name="predicate">A Predicate to Add</param>
+        public void AddEffect(Predicate predicate)
         {
-            moEffectList.Add(voPredicate);
+            moEffectList.Add(predicate);
         }
 
+        /// <summary>
+        /// String Representation of the Action
+        /// </summary>
+        /// <returns>Action: [ C={Preconditions} E={Effects} ]</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
@@ -94,12 +100,12 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// The Start Symbol has only Effects
         /// </summary>
-        /// <param name="voEffects">The Effects of the Start</param>
+        /// <param name="effects">The Effects of the Start</param>
         /// <returns>New Start Symbol</returns>
-        public static Action CreateStart(params Predicate[] voEffects)
+        public static Action CreateStart(params Predicate[] effects)
         {
-            Action start = new Action(new Predicate("Start"));
-            foreach (Predicate p in voEffects)
+            Action start = new Action(Predicate.Create("Start"));
+            foreach (Predicate p in effects)
             {
                 start.AddEffect(p);
             }
@@ -110,12 +116,12 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Create the finish symbol
         /// </summary>
-        /// <param name="voPreconditions">The Preconditions of the Finish</param>
+        /// <param name="preconditions">The Preconditions of the Finish</param>
         /// <returns>New Finish Symbol</returns>
-        public static Action CreateFinish(params Predicate[] voPreconditions)
+        public static Action CreateFinish(params Predicate[] preconditions)
         {
-            Action finish = new Action(new Predicate("Finish"));
-            foreach (Predicate p in voPreconditions)
+            Action finish = new Action(Predicate.Create("Finish"));
+            foreach (Predicate p in preconditions)
             {
                 finish.AddPrecondition(p);
             }

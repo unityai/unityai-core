@@ -5,10 +5,7 @@
 //
 // Description:   Represents an Effect in a Partial Order Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -19,6 +16,7 @@ namespace UnityAI.Core.Planning
     /// <summary>
     /// Represents the Effect of an Action
     /// </summary>
+    [Serializable]
     public class EffectList : List<Predicate>
     {
         #region Methods

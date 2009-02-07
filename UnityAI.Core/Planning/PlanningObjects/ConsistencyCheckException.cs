@@ -5,10 +5,7 @@
 //
 // Description:   Represents a ConsitentCheckException in a Partial Order Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;

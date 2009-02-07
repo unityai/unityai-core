@@ -72,24 +72,24 @@ namespace UnityAI.Test
         [TestMethod()]
         public void PlanOrderTest()
         {
-            Action RightShoe = new Action(new Predicate("RightShoe"));
-            RightShoe.AddPrecondition(new Predicate("RightSockOn"));
-            RightShoe.AddEffect(new Predicate("RightShoeOn"));
-            Action RightSock = new Action(new Predicate("RightSock"));
-            RightSock.AddEffect(new Predicate("RightSockOn"));
-            Action LeftShoe = new Action(new Predicate("LeftShoe"));
-            LeftShoe.AddPrecondition(new Predicate("LeftSockOn"));
-            LeftShoe.AddEffect(new Predicate("LeftShoeOn"));
-            Action LeftSock = new Action(new Predicate("LeftSock"));
-            LeftSock.AddEffect(new Predicate("LeftSockOn"));
+            Action RightShoe = new Action(Predicate.Create("RightShoe"));
+            RightShoe.AddPrecondition(Predicate.Create("RightSockOn"));
+            RightShoe.AddEffect(Predicate.Create("RightShoeOn"));
+            Action RightSock = new Action(Predicate.Create("RightSock"));
+            RightSock.AddEffect(Predicate.Create("RightSockOn"));
+            Action LeftShoe = new Action(Predicate.Create("LeftShoe"));
+            LeftShoe.AddPrecondition(Predicate.Create("LeftSockOn"));
+            LeftShoe.AddEffect(Predicate.Create("LeftShoeOn"));
+            Action LeftSock = new Action(Predicate.Create("LeftSock"));
+            LeftSock.AddEffect(Predicate.Create("LeftSockOn"));
 
 
             PartialOrderPlanner target = new PartialOrderPlanner(RightShoe, RightSock, LeftShoe, LeftSock);
 
             IEnumerable<Predicate> voInitialState = null;
             List<Predicate> voGoalState = new List<Predicate>();
-            voGoalState.Add(new Predicate("RightShoeOn"));
-            voGoalState.Add(new Predicate("LeftShoeOn"));
+            voGoalState.Add(Predicate.Create("RightShoeOn"));
+            voGoalState.Add(Predicate.Create("LeftShoeOn"));
 
             PartialOrderPlan plan = target.PlanOrder(voInitialState, voGoalState);
             Assert.IsTrue(plan != null);
@@ -108,36 +108,36 @@ namespace UnityAI.Test
         [TestMethod()]
         public void PlanOrderTestTireProblem()
         {
-            Action RemoveSpare = new Action(new Predicate("Remove", false, new ConstantTerm[] { "Spare", "Trunk" }));
-            RemoveSpare.AddPrecondition(new Predicate("At", false, new ConstantTerm[] { "Spare" , "Trunk" }));
-            RemoveSpare.AddEffect(new Predicate("At", true, new ConstantTerm[] { "Spare", "Trunk" }));
-            RemoveSpare.AddEffect(new Predicate("At", false, new ConstantTerm[] { "Spare", "Ground" }));
+            Action RemoveSpare = new Action(Predicate.Create("Remove", false, new ConstantTerm[] { "Spare", "Trunk" }));
+            RemoveSpare.AddPrecondition(Predicate.Create("At", false, new ConstantTerm[] { "Spare", "Trunk" }));
+            RemoveSpare.AddEffect(Predicate.Create("At", true, new ConstantTerm[] { "Spare", "Trunk" }));
+            RemoveSpare.AddEffect(Predicate.Create("At", false, new ConstantTerm[] { "Spare", "Ground" }));
 
-            Action RemoveFlat = new Action(new Predicate("Remove", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            RemoveFlat.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            RemoveFlat.AddEffect(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            RemoveFlat.AddEffect(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
+            Action RemoveFlat = new Action(Predicate.Create("Remove", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            RemoveFlat.AddPrecondition(Predicate.Create("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            RemoveFlat.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            RemoveFlat.AddEffect(Predicate.Create("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
 
-            Action PutOnSpare = new Action(new Predicate("PutOn", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
-            PutOnSpare.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
-            PutOnSpare.AddPrecondition(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            PutOnSpare.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
-            PutOnSpare.AddEffect(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            Action PutOnSpare = new Action(Predicate.Create("PutOn", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            PutOnSpare.AddPrecondition(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            PutOnSpare.AddPrecondition(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            PutOnSpare.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            PutOnSpare.AddEffect(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
 
-            Action LeaveOvernight = new Action(new Predicate("LeaveOvernight"));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            Action LeaveOvernight = new Action(Predicate.Create("LeaveOvernight"));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
 
             PartialOrderPlanner target = new PartialOrderPlanner(RemoveSpare, RemoveFlat, PutOnSpare, LeaveOvernight);
 
             List<Predicate> voInitialState = new List<Predicate>();
-            voInitialState.Add(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            voInitialState.Add(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            voInitialState.Add(Predicate.Create("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            voInitialState.Add(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
             List<Predicate> voGoalState = new List<Predicate>();
-            voGoalState.Add(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            voGoalState.Add(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
 
             PartialOrderPlan plan = target.PlanOrder(voInitialState, voGoalState);
             Assert.IsTrue(plan != null);
@@ -167,36 +167,36 @@ namespace UnityAI.Test
         [TestMethod()]
         public void PlanOrderTestTireProblemForceBacktrack()
         {
-            Action RemoveSpare = new Action(new Predicate("Remove", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            RemoveSpare.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            RemoveSpare.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            RemoveSpare.AddEffect(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            Action RemoveSpare = new Action(Predicate.Create("Remove", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            RemoveSpare.AddPrecondition(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            RemoveSpare.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            RemoveSpare.AddEffect(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
 
-            Action RemoveFlat = new Action(new Predicate("Remove", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            RemoveFlat.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            RemoveFlat.AddEffect(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            RemoveFlat.AddEffect(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
+            Action RemoveFlat = new Action(Predicate.Create("Remove", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            RemoveFlat.AddPrecondition(Predicate.Create("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            RemoveFlat.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            RemoveFlat.AddEffect(Predicate.Create("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
 
-            Action PutOnSpare = new Action(new Predicate("PutOn", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
-            PutOnSpare.AddPrecondition(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            PutOnSpare.AddPrecondition(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
-            PutOnSpare.AddEffect(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
-            PutOnSpare.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            Action PutOnSpare = new Action(Predicate.Create("PutOn", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            PutOnSpare.AddPrecondition(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            PutOnSpare.AddPrecondition(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            PutOnSpare.AddEffect(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            PutOnSpare.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
 
-            Action LeaveOvernight = new Action(new Predicate("LeaveOvernight"));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
-            LeaveOvernight.AddEffect(new Predicate("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            Action LeaveOvernight = new Action(Predicate.Create("LeaveOvernight"));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Ground")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Ground")));
+            LeaveOvernight.AddEffect(Predicate.Create("At", true, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
 
             PartialOrderPlanner target = new PartialOrderPlanner(PutOnSpare, RemoveSpare, LeaveOvernight, RemoveFlat);
 
             List<Predicate> voInitialState = new List<Predicate>();
-            voInitialState.Add(new Predicate("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
-            voInitialState.Add(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
+            voInitialState.Add(Predicate.Create("At", false, ConstantTerm.Create("Flat"), ConstantTerm.Create("Axle")));
+            voInitialState.Add(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Trunk")));
             List<Predicate> voGoalState = new List<Predicate>();
-            voGoalState.Add(new Predicate("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
+            voGoalState.Add(Predicate.Create("At", false, ConstantTerm.Create("Spare"), ConstantTerm.Create("Axle")));
 
             PartialOrderPlan plan = target.PlanOrder(voInitialState, voGoalState);
             Assert.IsTrue(plan != null);

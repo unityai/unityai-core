@@ -5,10 +5,7 @@
 //
 // Description:   Represents a Causal Link in a Partial Order Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -16,6 +13,7 @@ using System.Text;
 
 namespace UnityAI.Core.Planning
 {
+    [Serializable]
     public class CausalLink
     {
         #region Fields
@@ -57,14 +55,14 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Creates a CausalLink From Achieves To
         /// </summary>
-        /// <param name="voFrom">The From Action</param>
-        /// <param name="voAchieves">The Predicates that Achieves</param>
-        /// <param name="voTo">The To Action</param>
-        public CausalLink(Action voFrom, Predicate voAchieves, Action voTo)
+        /// <param name="from">The From Action</param>
+        /// <param name="achieves">The Predicates that Achieves</param>
+        /// <param name="to">The To Action</param>
+        public CausalLink(Action from, Predicate achieves, Action to)
         {
-            moFromAction = voFrom;
-            moAchieves = voAchieves;
-            moToAction = voTo;
+            moFromAction = from;
+            moAchieves = achieves;
+            moToAction = to;
         }
         #endregion
     }

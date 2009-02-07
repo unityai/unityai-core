@@ -6,10 +6,7 @@
 // Description:   Represents a Partial Order Plan in a Partial Order 
 //                Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -17,6 +14,7 @@ using System.Text;
 
 namespace UnityAI.Core.Planning
 {
+    [Serializable]
     public class PartialOrderPlan
     {
         #region Fields
@@ -54,7 +52,12 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Constructor
-        public PartialOrderPlan(IEnumerable<Predicate> voInitState, IEnumerable<Predicate> voGoalState)
+        /// <summary>
+        /// Partial Order Plan
+        /// </summary>
+        /// <param name="initState">Init State</param>
+        /// <param name="goalState">Goal State</param>
+        public PartialOrderPlan(IEnumerable<Predicate> initState, IEnumerable<Predicate> goalState)
         {
             moInitialState = new List<Predicate>();
             moGoalState = new List<Predicate>();
@@ -66,15 +69,15 @@ namespace UnityAI.Core.Planning
             moStartAction = Action.CreateStart();
             moFinishAction = Action.CreateFinish();
 
-            if (voInitState != null)
+            if (initState != null)
             {
-                foreach (Predicate p in voInitState)
+                foreach (Predicate p in initState)
                 {
                     moInitialState.Add(p);
                     moStartAction.AddEffect(p);
                 }
             }
-            foreach(Predicate p in voGoalState)
+            foreach(Predicate p in goalState)
             {
                 moGoalState.Add(p);
                 moFinishAction.AddPrecondition(p);
@@ -112,54 +115,60 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Add a Causal Link
         /// </summary>
-        /// <param name="voFrom">From Action</param>
-        /// <param name="voAchieves">The Predicate that Achieves</param>
-        /// <param name="voTo">To Action</param>
-        public void AddCausalLink(Action voFrom, Predicate voAchieves, Action voTo)
+        /// <param name="from">From Action</param>
+        /// <param name="achieves">The Predicate that Achieves</param>
+        /// <param name="to">To Action</param>
+        public void AddCausalLink(Action from, Predicate achieves, Action to)
         {
-            moCausalLinks.Add(new CausalLink(voFrom, voAchieves, voTo));
+            moCausalLinks.Add(new CausalLink(from, achieves, to));
         }
 
         /// <summary>
         /// Add an Ordering Constraint
         /// </summary>
-        /// <param name="voBefore">Before Action</param>
-        /// <param name="voAfter">After Action</param>
-        public void AddOrderingConstraint(Action voBefore, Action voAfter)
+        /// <param name="before">Before Action</param>
+        /// <param name="after">After Action</param>
+        public void AddOrderingConstraint(Action before, Action after)
         {
             //Will adding this constraint cause a loop?
-            bool bLoopDetected = CheckLoop(voBefore, voAfter);
+            bool bLoopDetected = CheckLoop(before, after);
 
             if (bLoopDetected == false)
             {
-                moOrderingConstraints.Add(new OrderingConstraint(voBefore, voAfter));
-                moOrderingConstraints.Add(new OrderingConstraint(moStartAction, voBefore));
-                if (voAfter.Identity != moFinishAction.Identity)
-                    moOrderingConstraints.Add(new OrderingConstraint(voBefore, moFinishAction));
+                moOrderingConstraints.Add(new OrderingConstraint(before, after));
+                moOrderingConstraints.Add(new OrderingConstraint(moStartAction, before));
+                if (after.Identity != moFinishAction.Identity)
+                    moOrderingConstraints.Add(new OrderingConstraint(before, moFinishAction));
             }
             else
             {
-                string sException = string.Format("Loop detected ordering {0} {{ {1}", voBefore.Identity.Name,
-                                                  voAfter.Identity.Name);
+                string sException = string.Format("Loop detected ordering {0} {{ {1}", before.Identity.Name,
+                                                  after.Identity.Name);
                 throw new ConsistencyCheckException(sException);
             }
         }
 
-        private bool CheckLoop(Action voBefore, Action voAfter)
+        /// <summary>
+        /// Check for a loop
+        /// </summary>
+        /// <param name="before"></param>
+        /// <param name="after"></param>
+        /// <returns></returns>
+        private bool CheckLoop(Action before, Action after)
         {
-            if (voBefore == voAfter)
+            if (before == after)
                 return true;
 
             List<OrderingConstraint> oList = moOrderingConstraints.FindAll(delegate(OrderingConstraint o)
                                                                                     {
-                                                                                        return o.Before == voAfter;
+                                                                                        return o.Before == after;
                                                                                     }
                                                                                     );
 
             //We are seeing if there is a condition like A->B B->C C->A
-            foreach(OrderingConstraint after in oList)
+            foreach(OrderingConstraint oc in oList)
             {
-                bool bCheck = CheckLoop(voBefore, after.After);
+                bool bCheck = CheckLoop(before, oc.After);
                 if (bCheck == true)
                     return true;
             }
@@ -170,46 +179,41 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Add an Action to the Plan
         /// </summary>
-        /// <param name="voAction">Action to Add</param>
-        public void AddAction(Action voAction)
+        /// <param name="action">Action to Add</param>
+        public void AddAction(Action action)
         {
-            moActions.Add(voAction);
-            foreach(Predicate pred in voAction.Preconditions)
+            moActions.Add(action);
+            foreach(Predicate pred in action.Preconditions)
             {
-                if (moStartAction.Effects.Exists(delegate(Predicate p)
-                            {
-                                return p == pred && p.IsNegative == pred.IsNegative;
-                            }) == false
-                    )
+                if (moStartAction.Effects.Contains(pred) == false)
                 {
-                    moOpenPreconditions.Add(new ActionPredicatePair(voAction, pred));
+                    moOpenPreconditions.Add(new ActionPredicatePair(action, pred));
                 }
                 else
                 {
-                    this.AddCausalLink(moStartAction, pred, voAction);
+                    this.AddCausalLink(moStartAction, pred, action);
                 }
             }
 
-            CheckPlanConsistent(voAction);
+            CheckPlanConsistent(action);
         }
 
         /// <summary>
         /// Remove the Action
         /// </summary>
-        /// <param name="voAction">Action to Remove</param>
-        /// <param name="voActionPredicatePair">Action-Predicate Pair</param>
-        public void RemoveAction(Action voAction, ActionPredicatePair voActionPredicatePair)
+        /// <param name="action">Action to Remove</param>
+        /// <param name="actionPredicatePair">Action-Predicate Pair</param>
+        public void RemoveAction(Action action, ActionPredicatePair actionPredicatePair)
         {
-            moActions.Remove(voAction);
+            moActions.Remove(action);
             moCausalLinks.RemoveAll(delegate(CausalLink c)
                                         {
-                                            return c.From == voAction && c.Achieves == voActionPredicatePair.Second &&
-                                                   c.Achieves.IsNegative == voActionPredicatePair.Second.IsNegative &&
-                                                   c.To == voActionPredicatePair.First;
+                                            return c.From == action && c.Achieves == actionPredicatePair.Predicate &&
+                                                   c.To == actionPredicatePair.Action;
                                         });
             moOrderingConstraints.RemoveAll(delegate(OrderingConstraint o)
                                                 {
-                                                    return o.Before == voAction && o.After == voActionPredicatePair.First;
+                                                    return o.Before == action && o.After == actionPredicatePair.Action;
                                                 });
             //TODO: Clean up the Start and Finish ones as well
         }
@@ -217,36 +221,35 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Check the Plan for Consistency
         /// </summary>
-        /// <param name="voAction"></param>
-        private void CheckPlanConsistent(Action voAction)
+        /// <param name="action"></param>
+        private void CheckPlanConsistent(Action action)
         {
             //check for conflicts in the Causal Links
             foreach (CausalLink c in moCausalLinks)
             {
-                if (c.To.Identity != voAction.Identity)
+                if (c.To.Identity != action.Identity)
                 {
                     //adding a negative predicate that cancels out a Causal Link
                     //causes a conflict we can add an ordering constraint either B { C or C { A
-                    bool bConflict = voAction.Effects.Exists(delegate(Predicate p)
+                    bool bConflict = action.Effects.Exists(delegate(Predicate p)
                             {
-                                return
-                                    p.IsNegative != c.Achieves.IsNegative && c.Achieves == p;
+                                return p.IsComplimentOf(c.Achieves);
                             });
                     if (bConflict == true)
                     {
                         //if no loop would occur by adding B { C then add it
-                        if (c.To != moFinishAction && CheckLoop(c.To, voAction) == false)
+                        if (c.To != moFinishAction && CheckLoop(c.To, action) == false)
                         {
-                            AddOrderingConstraint(c.To, voAction); 
+                            AddOrderingConstraint(c.To, action); 
                         }
                         else if (c.From != moStartAction) //we have no choice then to try adding C { A
                         {
-                            AddOrderingConstraint(voAction, c.From);
+                            AddOrderingConstraint(action, c.From);
                         }
                         else
                         {
                             string sException = string.Format("{0} {{ {1} and {1} {{ {2} invalid.", c.To.Identity.Name,
-                                          voAction.Identity.Name, c.From.Identity.Name);
+                                          action.Identity.Name, c.From.Identity.Name);
                             throw new ConsistencyCheckException(sException);
                         }
                     }

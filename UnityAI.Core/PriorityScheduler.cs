@@ -7,10 +7,7 @@
 //                This will implement three Queues, High, Medium and Low
 //                So AI actions can be managed based on their Priority
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;

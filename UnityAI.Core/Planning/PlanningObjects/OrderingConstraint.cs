@@ -6,10 +6,7 @@
 // Description:   Represents an Ordering Constraint in a Partial Order 
 //                Plan
 //
-// Modification Notes:
-// Date		Author        	Notes
-// -------- ------          -----------------------------------------
-// 01/26/09	SMcCarthy		Initial Implementation
+// Authors: SMcCarthy
 //-------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
@@ -17,6 +14,7 @@ using System.Text;
 
 namespace UnityAI.Core.Planning
 {
+    [Serializable]
     public class OrderingConstraint
     {
         #region Fields
@@ -48,12 +46,12 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Create an Ordering that is A is before B
         /// </summary>
-        /// <param name="voBefore">The Action that Comes Before</param>
-        /// <param name="voAfter">The Action that Comes After</param>
-        public OrderingConstraint(Action voBefore, Action voAfter)
+        /// <param name="before">The Action that Comes Before</param>
+        /// <param name="after">The Action that Comes After</param>
+        public OrderingConstraint(Action before, Action after)
         {
-            moBeforeAction = voBefore;
-            moAfterAction = voAfter;
+            moBeforeAction = before;
+            moAfterAction = after;
         }
         #endregion
     }

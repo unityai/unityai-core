@@ -126,6 +126,11 @@ namespace UnityAI.Core.Planning
             }
         }
 
+        /// <summary>
+        /// Is this object equal to another object?
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         public override bool Equals(object obj)
         {
             bool result = false;
@@ -137,6 +142,10 @@ namespace UnityAI.Core.Planning
             return result;
         }
 
+        /// <summary>
+        /// The the HashCode
+        /// </summary>
+        /// <returns></returns>
         public override int GetHashCode()
         {
             return CalculateHashCode(msName, meTermType); 
@@ -145,14 +154,14 @@ namespace UnityAI.Core.Planning
         /// <summary>
         /// Calculates a hash code based on the name and term type
         /// </summary>
-        /// <param name="vsName">Name</param>
-        /// <param name="veTermType">Term type</param>
+        /// <param name="name">Name</param>
+        /// <param name="termType">Term type</param>
         /// <returns>Hash code</returns>
         /// <remarks>Implemented separetly from GetHashCode so that it can be
         /// used to generate hashes without the need for an instance</remarks>
-        protected static int CalculateHashCode(string vsName, EnumTermType veTermType)
+        protected static int CalculateHashCode(string name, EnumTermType termType)
         {
-            return vsName.GetHashCode() ^ veTermType.GetHashCode();
+            return name.GetHashCode() ^ termType.GetHashCode();
         }
         #endregion
 
