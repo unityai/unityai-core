@@ -33,7 +33,7 @@ namespace UnityAI.Core.Planning
 
         #region Methods
         /// <summary>
-        /// Plan the Order using POP Alogorithm
+        /// Plan the Order using POP Algorithm
         /// </summary>
         /// <param name="initialState">Initial Predicates</param>
         /// <param name="goalState">Goal Predicates</param>
