@@ -83,7 +83,6 @@ namespace UnityAI.Test
             Action LeftSock = new Action(Predicate.Create("LeftSock"));
             LeftSock.AddEffect(Predicate.Create("LeftSockOn"));
 
-
             PartialOrderPlanner target = new PartialOrderPlanner(RightShoe, RightSock, LeftShoe, LeftSock);
 
             IEnumerable<Predicate> voInitialState = null;

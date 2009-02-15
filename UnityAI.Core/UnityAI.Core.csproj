@@ -60,6 +60,9 @@
     <Compile Include="Planning\PlanningObjects\CausalLink.cs" />
     <Compile Include="Planning\PlanningObjects\ConsistencyCheckException.cs" />
     <Compile Include="Planning\PlanningObjects\ConstantTerm.cs" />
+    <Compile Include="Planning\PlanningObjects\Task.cs" />
+    <Compile Include="Planning\PlanningObjects\TaskList.cs" />
+    <Compile Include="Planning\PlanningObjects\VariableTerm.cs" />
     <Compile Include="Planning\PlanningObjects\EffectList.cs" />
     <Compile Include="Planning\PlanningObjects\Goal.cs" />
     <Compile Include="Planning\PlanningObjects\OrderingConstraint.cs" />

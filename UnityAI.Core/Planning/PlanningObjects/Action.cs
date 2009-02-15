@@ -17,9 +17,9 @@ namespace UnityAI.Core.Planning
     public class Action
     {
         #region Field
-        private Predicate moActionIdentity;
-        private PreconditionList moPreconditionList = new PreconditionList();
-        private EffectList moEffectList = new EffectList();
+        protected Predicate moActionIdentity;
+        protected PreconditionList moPreconditionList = new PreconditionList();
+        protected EffectList moEffectList = new EffectList();
         #endregion
 
         #region Properties

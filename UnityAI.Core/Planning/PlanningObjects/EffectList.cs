@@ -19,6 +19,32 @@ namespace UnityAI.Core.Planning
     [Serializable]
     public class EffectList : List<Predicate>
     {
+        #region Constructors
+        /// <summary>
+        /// Create Empty Effect List
+        /// </summary>
+        public EffectList() : base()
+        {
+        }
+
+        /// <summary>
+        /// Create Effect List of Given Size
+        /// </summary>
+        /// <param name="capacity">Initial Size</param>
+        public EffectList(int capacity) : base(capacity)
+        {
+        }
+
+        /// <summary>
+        /// Create a Effect List
+        /// </summary>
+        /// <param name="collection">Collection to Load</param>
+        public EffectList(IEnumerable<Predicate> collection)
+            : base(collection)
+        {
+        }
+        #endregion
+
         #region Methods
         /// <summary>
         /// String Representation of the PreconditionList
