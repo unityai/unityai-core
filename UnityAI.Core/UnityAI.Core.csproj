@@ -44,6 +44,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Belief\Arc.cs" />
+    <Compile Include="Belief\Arcs.cs" />
+    <Compile Include="Belief\BeliefNodeList.cs" />
+    <Compile Include="Belief\BeliefNet.cs" />
+    <Compile Include="Belief\BeliefNode.cs" />
     <Compile Include="Fuzzy\FuzzyController.cs" />
     <Compile Include="Fuzzy\FuzzyObjects\ContinuousFuzzyRuleVariable.cs" />
     <Compile Include="Fuzzy\FuzzyObjects\FuzzyClause.cs" />
