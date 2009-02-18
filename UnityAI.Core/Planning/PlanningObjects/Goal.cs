@@ -73,10 +73,11 @@ namespace UnityAI.Core.Planning
             int comparison = 0;
             if (Predicate == null && other.Predicate != null)
                 comparison = -1;
-            else if (Predicate != null)
-                comparison = Predicate.CompareTo(other.Predicate);
             else
                 comparison = Desirability.CompareTo(other.Desirability);
+            if (comparison == 0 && Predicate != null)
+                comparison = Predicate.CompareTo(other.Predicate);
+
             return comparison;
         }
         #endregion
