@@ -143,7 +143,7 @@ namespace UnityAI.Core.Planning
         }
 
         /// <summary>
-        /// The the HashCode
+        /// Calculates the object's HashCode
         /// </summary>
         /// <returns></returns>
         public override int GetHashCode()
