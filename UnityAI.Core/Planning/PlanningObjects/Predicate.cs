@@ -21,6 +21,8 @@ namespace UnityAI.Core.Planning
         private List<Term> moParameters = null;
         private bool mbIsNegative = false;
         private static Dictionary<int, Predicate> moPredicateCache;
+        private DateTime createdOn = DateTime.Now;
+        private DateTime lastValidated;
         #endregion
 
         #region Properties
@@ -48,6 +50,28 @@ namespace UnityAI.Core.Planning
         {
             get { return mbIsNegative;  }
             set { mbIsNegative = value; }
+        }
+
+        /// <summary>
+        /// Date and time that the predicate was created
+        /// </summary>
+        public DateTime CreatedOn
+        {
+            get 
+            { 
+                return createdOn; 
+            }
+        }
+
+        /// <summary>
+        /// When was the predicate last considered current
+        /// </summary>
+        public DateTime LastValidated
+        {
+            get
+            {
+                return lastValidated;
+            }
         }
         #endregion
 
@@ -98,6 +122,8 @@ namespace UnityAI.Core.Planning
             {
                 moParameters = new List<Term>();
             }
+            Validate();
+            
         }
         #endregion
 
@@ -115,7 +141,8 @@ namespace UnityAI.Core.Planning
             {
                 Predicate predicate = obj as Predicate;
 
-                if (Name == predicate.Name && IsNegative == predicate.IsNegative && Parameters.Count == predicate.Parameters.Count)
+                if (Name == predicate.Name && IsNegative == predicate.IsNegative && 
+                    Parameters.Count == predicate.Parameters.Count)
                 {
                     result = true;
                     for (int i = 0; i < Parameters.Count; i++)
@@ -217,6 +244,14 @@ namespace UnityAI.Core.Planning
         #endregion
 
         #region Public Methods
+        /// <summary>
+        /// Marks the predicate as current
+        /// </summary>
+        public void Validate()
+        {
+            this.lastValidated = DateTime.Now;
+        }
+
         /// <summary>
         /// Are the Predicates Negatives of Eachother
         /// </summary>
