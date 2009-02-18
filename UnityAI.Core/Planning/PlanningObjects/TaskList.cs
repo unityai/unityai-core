@@ -3,7 +3,7 @@
 // Developed For:  UnityAI
 // License: Artistic License 2.0
 //
-// Description:   Represents a Precondition in a Partial Order Plan
+// Description:   Represents a Task List 
 //
 // Authors: SMcCarthy
 //-------------------------------------------------------------------
@@ -17,46 +17,45 @@ namespace UnityAI.Core.Planning
     /// Represents the Precondition of an Action Object
     /// </summary>
     [Serializable]
-    public class PreconditionList : List<Predicate>
+    public class TaskList : List<Task>
     {
         #region Constructors
         /// <summary>
-        /// Create Empty Precondition List
+        /// Create Empty Task List
         /// </summary>
-        public PreconditionList() : base()
+        public TaskList() : base()
         {
         }
 
         /// <summary>
-        /// Create Precondition List of Given Size
+        /// Create Task List of Given Size
         /// </summary>
         /// <param name="capacity">Initial Size</param>
-        public PreconditionList(int capacity) : base(capacity)
+        public TaskList(int capacity) : base(capacity)
         {
         }
 
         /// <summary>
-        /// Create a Precondition List
+        /// Create a Task List
         /// </summary>
         /// <param name="collection">Collection to Load</param>
-        public PreconditionList(IEnumerable<Predicate> collection)
-            : base(collection)
+        public TaskList(IEnumerable<Task> collection) : base(collection)
         {
         }
         #endregion
 
         #region Methods
         /// <summary>
-        /// String Representation of the PreconditionList
+        /// String Representation of the TaskList
         /// </summary>
-        /// <returns>[ {Predicates} ]</returns>
+        /// <returns>[ {Tasks} ]</returns>
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("[");
-            foreach (Predicate p in this)
+            foreach (Task t in this)
             {
-                sb.Append(p.ToString());
+                sb.Append(t.ToString());
                 sb.Append(",");
             }
             sb.Append("]");

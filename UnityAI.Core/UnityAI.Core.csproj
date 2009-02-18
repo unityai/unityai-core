@@ -44,6 +44,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Belief\Arc.cs" />
+    <Compile Include="Belief\Arcs.cs" />
+    <Compile Include="Belief\BeliefNodeList.cs" />
+    <Compile Include="Belief\BeliefNet.cs" />
+    <Compile Include="Belief\BeliefNode.cs" />
     <Compile Include="Fuzzy\FuzzyController.cs" />
     <Compile Include="Fuzzy\FuzzyObjects\ContinuousFuzzyRuleVariable.cs" />
     <Compile Include="Fuzzy\FuzzyObjects\FuzzyClause.cs" />
@@ -60,6 +65,9 @@
     <Compile Include="Planning\PlanningObjects\CausalLink.cs" />
     <Compile Include="Planning\PlanningObjects\ConsistencyCheckException.cs" />
     <Compile Include="Planning\PlanningObjects\ConstantTerm.cs" />
+    <Compile Include="Planning\PlanningObjects\Task.cs" />
+    <Compile Include="Planning\PlanningObjects\TaskList.cs" />
+    <Compile Include="Planning\PlanningObjects\VariableTerm.cs" />
     <Compile Include="Planning\PlanningObjects\EffectList.cs" />
     <Compile Include="Planning\PlanningObjects\Goal.cs" />
     <Compile Include="Planning\PlanningObjects\OrderingConstraint.cs" />

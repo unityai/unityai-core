@@ -21,6 +21,7 @@ namespace UnityAI.Core
     {
         Unknown = 0,
         Constant = 1,
+        Variable = 2,
     }
     #endregion
 

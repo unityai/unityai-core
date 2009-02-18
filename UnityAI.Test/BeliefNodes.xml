@@ -1,0 +1,107 @@
+<Nodes>
+	<Node name="decor" priorprob="0.5" currentprob="0.9" /> 
+	<Node name="table-setting" priorprob="0.5" currentprob="0.9" />
+	<Node name="surface-cleanliness" priorprob="0.8" currentprob="0.9"  />
+	<Node name="air" priorprob="0.6" currentprob="0.9"  />
+	<Node name="sounds" priorprob="0.5" currentprob="0.9"  />
+	<Node name="clientele" priorprob="0.5" currentprob="0.9"  />
+	<Node name="menu" priorprob="0.5" currentprob="0.9"  />
+	<Node name="prices" priorprob="0.5" currentprob="0.9" />
+	<Node name="service" priorprob="0.3" currentprob="0.9" />
+
+	<Node name="popularity" priorprob="0.5" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="sounds" sufficiency="3.0" neccessity="1.0" />
+			<Arc name="clientele" sufficiency="3.0" neccessity="0.2" />
+		</Arcs>
+	</Node>
+
+	<Node name="elegance" priorprob="0.5" currentprob="0.0" >
+		<Arcs arctype="Independent">
+			<Arc name="decor" sufficiency="3.0" neccessity="0.5" />
+			<Arc name="table-setting" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="sounds" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="clientele" sufficiency="3.0" neccessity="0.5" />
+			<Arc name="menu" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="prices" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="service" sufficiency="3.0" neccessity="0.5" />
+		</Arcs>
+	</Node>
+
+	<Node name="artistry" priorprob="0.5" currentprob="0.0" >
+		<Arcs arctype="Independent">
+			<Arc name="decor" sufficiency="3.0" neccessity="0.5" />
+			<Arc name="table-setting" sufficiency="3.0" neccessity="0.5" />
+			<Arc name="menu" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="service" sufficiency="3.0" neccessity="0.5" />
+		</Arcs>
+	</Node>
+
+	<Node name="cleanliness" priorprob="0.7" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="surface-cleanliness" sufficiency="3.0" neccessity="0.2" />
+			<Arc name="air" sufficiency="1.0" neccessity="0.5" />
+		</Arcs>
+	</Node>
+
+	<Node name="taste" priorprob="0.6" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="popularity" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="elegance" sufficiency="3.0" neccessity="0.8" />
+		</Arcs>
+	</Node>
+
+	<Node name="texture" priorprob="0.6" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="popularity" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="elegance" sufficiency="3.0" neccessity="0.5" />
+		</Arcs>
+	</Node>
+
+	<Node name="appearance" priorprob="0.5" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="artistry" sufficiency="3.0" neccessity="0.4" />
+		</Arcs>
+	</Node>
+
+	<Node name="quantity" priorprob="0.5" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="popularity" sufficiency="3.0" neccessity="0.5" />
+		</Arcs>
+	</Node>
+
+	<Node name="correctness" priorprob="0.5" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="elegance" sufficiency="3.0" neccessity="0.7" />
+		</Arcs>
+	</Node>
+
+	<Node name="nutrition" priorprob="0.6" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="popularity" sufficiency="3.0" neccessity="0.7" />
+			<Arc name="elegance" sufficiency="3.0" neccessity="0.8" />
+		</Arcs>
+	</Node>
+
+	<Node name="hygiene" priorprob="0.8" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arc name="cleanliness" sufficiency="3.0" neccessity="0.1" />
+		</Arcs>
+	</Node>
+
+	<Node name="overall-food-quality" priorprob="0.5" currentprob="0.0">
+		<Arcs arctype="Independent">
+			<Arcs arctype="Conjunctive">
+				<Arc name="taste" sufficiency="3.0" neccessity="0.3" />
+				<Arc name="texture" sufficiency="3.0" neccessity="0.5" />
+			</Arcs>
+			<Arcs arctype="Conjunctive">
+				<Arc name="appearance" sufficiency="3.0" neccessity="0.3" />
+				<Arc name="correctness" sufficiency="3.0" neccessity="0.8" />
+			</Arcs>
+			<Arc name="quantity" sufficiency="3.0" neccessity="0.8" />
+			<Arc name="nutrition" sufficiency="3.0" neccessity="0.3" />
+			<Arc name="hygiene" sufficiency="3.0" neccessity="0.2" />
+		</Arcs>
+	</Node>
+</Nodes>
